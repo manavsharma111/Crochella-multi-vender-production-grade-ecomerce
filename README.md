@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://via.placeholder.com/150" alt="Crochella Logo" width="100" />
+  <img src="frontend/public/logo.svg" alt="Crochella Logo" width="150" />
 
   # Crochella - Multi-Vendor Production Grade E-Commerce Platform
 
