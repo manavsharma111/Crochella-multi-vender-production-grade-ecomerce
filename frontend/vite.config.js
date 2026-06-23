@@ -15,6 +15,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectManifest: {
         injectionPoint: 'self.__WB_MANIFEST',
+        maximumFileSizeToCacheInBytes: 5000000,
       },
       manifest: {
         name: 'Crochella Premium Store',
