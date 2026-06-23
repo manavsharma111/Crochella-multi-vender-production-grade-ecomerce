@@ -2,6 +2,20 @@ const user = require('../models/User')
 const Product = require('../models/Product')
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
+const redisClient = require('../config/redis')
+
+const clearProductCache = async () => {
+    if (redisClient.isOpen) {
+        try {
+            const keys = await redisClient.keys('cache:/api/products*');
+            if (keys.length > 0) {
+                await redisClient.del(keys);
+            }
+        } catch (error) {
+            console.error('Redis cache clearing error:', error);
+        }
+    }
+}
 
 // create product 
 const createProduct = async (req,res) => {
@@ -30,6 +44,9 @@ const createProduct = async (req,res) => {
             flashSaleEndTime,
             media:mediaArray
         })
+
+        await clearProductCache();
+
         res.status(201).json({
             success:true,
             message:"Product created successfully", 
@@ -91,7 +108,7 @@ const getAllProducts = async (req,res) => {
 
         const { calculateDynamicPrice } = require('../services/pricing.service');
 
-        // pagination - saare product ek saath na aaye 
+        // pagination - isse saare product ek saath na aaye 
         const limit = Number(req.query.limit) || 10;
         const page = Number(req.query.page) || 1;
         const skip = (page - 1) * limit;
@@ -183,6 +200,9 @@ const updateProduct = async (req,res) => {
         Object.keys(updateFields).forEach(key => updateFields[key] === undefined && delete updateFields[key])
 
         const updatedProduct = await Product.findByIdAndUpdate(req.params.id, updateFields, {new:true})
+
+        await clearProductCache();
+
         res.status(200).json({
             success:true,
             message:"Product updated successfully",
@@ -202,6 +222,9 @@ const deleteProduct = async (req,res) => {
         if(!deletedProduct){
             return res.status(404).json({message:"Product not found"})
         }
+
+        await clearProductCache();
+
         res.status(200).json({
             success:true,
             message:"Product deleted successfully",

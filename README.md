@@ -78,12 +78,14 @@ Built for maximum conversion and user delight:
 ### ⚙️ Backend Architecture
 - **Core Environment:** Node.js, Express.js (v5)
 - **Database:** MongoDB with Mongoose ODM
-- **Authentication:** Passport.js (Google, Facebook, Twitter OAuth), JWT, bcrypt
-- **Real-Time Engine:** Socket.io
+- **Caching & Message Broker:** Redis (Upstash) for API Caching and distributed Rate Limiting
+- **Background Jobs:** BullMQ for asynchronous task processing (e.g., Email Queues)
+- **Authentication:** Passport.js (Google, Facebook, Twitter OAuth), JWT (with Redis Blacklisting for secure logouts), bcrypt
+- **Real-Time Engine:** Socket.io (with Redis Adapter for horizontal scaling)
 - **Payment Gateway:** Razorpay SDK
 - **AI Integrations:** `@google/genai`, `openai`, `groq-sdk`
 - **File Management:** Multer, Cloudinary
-- **Utilities:** PDFKit (Invoicing), Nodemailer (Emails), Web-Push (Browser Notifications), Node-Cron (Scheduled Tasks)
+- **Utilities:** PDFKit (Invoicing), Nodemailer (Emails via Queue), Web-Push (Browser Notifications)
 
 ---
 
@@ -128,8 +130,9 @@ Create a `.env` file in the `backend/` directory:
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 
-# Security & Auth
+# Security, Auth & Caching
 JWT_SECRET=your_super_secret_jwt_key
+REDIS_URI=rediss://default:your_token@your_upstash_domain:6379
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
 FACEBOOK_CLIENT_ID=your_facebook_client_id

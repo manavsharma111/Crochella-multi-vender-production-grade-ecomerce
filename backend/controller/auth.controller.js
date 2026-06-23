@@ -1,8 +1,9 @@
-const sendEmail = require('../services/emailOTPService');
+const { emailQueue } = require('../services/queue.service');
 const User = require('../models/User');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Otp = require('../models/Otp');
+const redisClient = require('../config/redis');
 
 // registration
 const signUpUser = async (req, res) => {
@@ -16,8 +17,8 @@ const signUpUser = async (req, res) => {
         if (email === process.env.ADMIN_EMAIL || email === process.env.SELLER_EMAIL) {
             return res.status(400).json({ message: "Invalid email domain or registration restricted." })
         }
-        
-          // check user exists 
+
+        // check user exists 
         const userExists = await User.findOne({ email })
         if (userExists) {
             return res.status(400).json({ message: "User already    exists" })
@@ -51,12 +52,13 @@ const signUpUser = async (req, res) => {
         // delete otp after verification 
         await Otp.deleteMany({ email })
 
-        // Send Success Email
-        await sendEmail({
+        // Send Success Email via BullMQ Queue
+        await emailQueue.add('sendRegistrationSuccess', {
             to: email,
             subject: "Registration Successful",
             html: `<p>Hi ${name}, welcome to Our Handloom Store!</p>`
-        })
+        });
+
         res.status(201).json({ message: "User registered successfully" })
     } catch (error) {
         console.error(error)
@@ -70,8 +72,10 @@ const sendRegistrationOtp = async (req, res) => {
         const { email } = req.body
         const otp = Math.floor(100000 + Math.random() * 900000)
         await Otp.create({ email, otp, expiresAt: new Date(Date.now() + 10 * 60 * 1000) })
-        await sendEmail({ to: email, subject: "🔒 Verify Your Account - OTP Verification",
-html: `
+        await emailQueue.add('sendOTP', {
+            to: email,
+            subject: "🔒 Verify Your Account - OTP Verification",
+            html: `
 <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; padding: 40px 0; width: 100%; margin: 0;">
   <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 500px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); overflow: hidden; border-collapse: collapse;">
     
@@ -111,7 +115,7 @@ html: `
     
   </table>
 </div>
-` })
+`       });
         res.status(200).json({ message: "OTP sent successfully" })
     } catch (error) {
         console.error(error)
@@ -162,7 +166,7 @@ const loginUser = async (req, res) => {
         // Token: use role from DB so delivery_boy gets correct role
         const token = jwt.sign({ id: buyer._id, role: buyer.role || 'buyer' }, process.env.JWT_SECRET, { expiresIn: '15m' });
         const refreshToken = jwt.sign({ id: buyer._id, role: buyer.role || 'buyer' }, process.env.JWT_SECRET + '_refresh', { expiresIn: '7d' });
-        
+
         res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 })
         res.status(200).json({
             message: "Login successful",
@@ -175,56 +179,70 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: "Internal server error" })
     }
 }
-    // verify otp
+// verify otp
 const verifyOtp = async (req, res) => {
-        try {
-            const { email, otp } = req.body
-            const otpRecord = await Otp.findOne({ email }).sort({ createdAt: -1 })
-            if (!otpRecord || otpRecord.otp !== otp) {
-                return res.status(400).json({ message: "Invalid or expired OTP" })
-            }
-            await Otp.deleteMany({ email })
-            await User.updateOne({ email }, { $set: { isOtpVerified: true } })
-            res.status(200).json({ message: "OTP verified successfully" })
-        } catch (error) {
-            console.error(error)
-            res.status(500).json({ message: "Internal server error" })
-        }
-    }
-    // reset password 
-const resetPassword=async (req,res)=>{
     try {
-        const {email,password}=req.body
+        const { email, otp } = req.body
+        const otpRecord = await Otp.findOne({ email }).sort({ createdAt: -1 })
+        if (!otpRecord || otpRecord.otp !== otp) {
+            return res.status(400).json({ message: "Invalid or expired OTP" })
+        }
+        await Otp.deleteMany({ email })
+        await User.updateOne({ email }, { $set: { isOtpVerified: true } })
+        res.status(200).json({ message: "OTP verified successfully" })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}
+// reset password 
+const resetPassword = async (req, res) => {
+    try {
+        const { email, password } = req.body
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
             return res.status(400).json({ message: "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character" })
         }
 
-        const user =await User.findOne({email})
-        if(!user || !user.isOtpVerified){
-            return res.status(400).json({message:"otp verification required"})
+        const user = await User.findOne({ email })
+        if (!user || !user.isOtpVerified) {
+            return res.status(400).json({ message: "otp verification required" })
         }
 
-        const hashedPassword=await bcryptjs.hash(password,10)
-        user.password=hashedPassword
-        user.isOtpVerified=false
+        const hashedPassword = await bcryptjs.hash(password, 10)
+        user.password = hashedPassword
+        user.isOtpVerified = false
         await user.save()
-        return res.status(200).json({message:"password reset successfully"})
+        return res.status(200).json({ message: "password reset successfully" })
 
     } catch (error) {
-         return res.status(500).json({message:`reset otp error ${error}`})
+        return res.status(500).json({ message: `reset otp error ${error}` })
     }
 }
 // logout
-const logOut = async(req,res)=>{
-    try{
+const logOut = async (req, res) => {
+    try {
+        const token = req.cookies.token || (req.headers.authorization && req.headers.authorization.split(" ")[1]);
+        const refreshToken = req.cookies.refreshToken;
+
+        if (redisClient.isOpen) {
+            const expiry = 7 * 24 * 60 * 60; // 7 days in seconds
+            if (token) {
+                await redisClient.setEx(`bl_${token}`, expiry, 'true').catch(err => console.error(err));
+            }
+            if (refreshToken) {
+                await redisClient.setEx(`bl_${refreshToken}`, expiry, 'true').catch(err => console.error(err));
+            }
+        }
+
         res.clearCookie("token")
         res.clearCookie("refreshToken")
-        res.json({message: "Logout successful"})
+        res.json({ message: "Logout successful" })
     }
-    catch(error){
-        res.status(500).json({message: "Internal server error"})
+    catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ message: "Internal server error" })
     }
 }
 
@@ -236,7 +254,7 @@ const handleSocialLogin = (req, res) => {
         }
 
         const token = jwt.sign(
-            { 
+            {
                 id: req.user._id,
                 role: req.user.role || 'buyer',
                 email: req.user.email
@@ -246,7 +264,7 @@ const handleSocialLogin = (req, res) => {
         );
 
         const refreshToken = jwt.sign(
-            { 
+            {
                 id: req.user._id,
                 role: req.user.role || 'buyer',
                 email: req.user.email
@@ -288,12 +306,12 @@ const refreshTokenHandler = async (req, res) => {
     }
 }
 
-module.exports = { 
-    signUpUser, 
+module.exports = {
+    signUpUser,
     loginUser,
-    logOut, 
-    sendRegistrationOtp, 
-    verifyOtp, 
+    logOut,
+    sendRegistrationOtp,
+    verifyOtp,
     resetPassword,
     handleSocialLogin,
     refreshTokenHandler

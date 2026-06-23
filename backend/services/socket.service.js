@@ -1,4 +1,6 @@
 const { Server } = require('socket.io')
+const { createAdapter } = require('@socket.io/redis-adapter')
+const redisClient = require('../config/redis')
 
 let io
 
@@ -11,6 +13,14 @@ const initSocket = (server) => {
             allowedHeaders: ["Content-Type", "Authorization"],
         }
     })
+
+    if (process.env.REDIS_URI) {
+        const subClient = redisClient.duplicate();
+        subClient.connect().then(() => {
+            io.adapter(createAdapter(redisClient, subClient));
+            console.log('Socket.io Redis adapter configured');
+        }).catch(err => console.error('Socket.io Redis adapter error:', err));
+    }
 
     io.on('connection', (socket) => {
         socket.on('joinProductRoom', (productId) => {
