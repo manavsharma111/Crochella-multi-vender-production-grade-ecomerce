@@ -78,9 +78,10 @@ const VideoScaleTransition = () => {
     >
       <h2 
         ref={textRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-slate-200 whitespace-nowrap pointer-events-none z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-slate-50/10 whitespace-nowrap pointer-events-none z-0"
       >
-        THE VISION
+        THE
+         VISION
       </h2>
 
       {/* The 3x3 Grid Layout */}
