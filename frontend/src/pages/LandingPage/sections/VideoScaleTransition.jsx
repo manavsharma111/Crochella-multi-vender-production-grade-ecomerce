@@ -78,7 +78,7 @@ const VideoScaleTransition = () => {
     >
       <h2 
         ref={textRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-[#ff007f]/5 whitespace-nowrap pointer-events-none z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-slate-200 whitespace-nowrap pointer-events-none z-0"
       >
         THE VISION
       </h2>
