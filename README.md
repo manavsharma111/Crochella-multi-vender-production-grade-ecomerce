@@ -165,7 +165,7 @@ VITE_API_BASE_URL=http://localhost:5000/api
 ---
 
 ## ⚡ Running the Application
-
+ 
 1. **Launch the Backend Server:**
    ```bash
    cd backend
