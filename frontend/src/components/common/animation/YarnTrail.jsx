@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react"
 
 const YarnTrail = ({ color = "#ff007f" }) => {
   const canvasRef = useRef(null)
@@ -7,30 +7,30 @@ const YarnTrail = ({ color = "#ff007f" }) => {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
-    
+    const ctx = canvas.getContext("2d")
+
     // Set canvas to full screen
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
-    
-    window.addEventListener('resize', resize)
+
+    window.addEventListener("resize", resize)
     resize()
 
     const handleMouseMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY }
     }
-    
-    window.addEventListener('mousemove', handleMouseMove)
+
+    window.addEventListener("mousemove", handleMouseMove)
 
     // Animation Loop
     let animationFrameId
-    
+
     const render = () => {
       // Add current mouse position to points array
       points.current.push({ x: mouse.current.x, y: mouse.current.y })
-      
+
       // Keep only the last 30 points for the trail length
       if (points.current.length > 30) {
         points.current.shift()
@@ -55,21 +55,21 @@ const YarnTrail = ({ color = "#ff007f" }) => {
         if (points.current.length > 2) {
           const last = points.current.length - 1
           ctx.quadraticCurveTo(
-            points.current[last - 1].x, 
-            points.current[last - 1].y, 
-            points.current[last].x, 
-            points.current[last].y
+            points.current[last - 1].x,
+            points.current[last - 1].y,
+            points.current[last].x,
+            points.current[last].y,
           )
         }
 
         // Stroke styling (Luxury Glowing Yarn)
-        ctx.lineCap = 'round'
-        ctx.lineJoin = 'round'
+        ctx.lineCap = "round"
+        ctx.lineJoin = "round"
         ctx.lineWidth = 2
         ctx.strokeStyle = color
         ctx.shadowColor = color
         ctx.shadowBlur = 10
-        
+
         // Add a slight gradient/fade effect to the trail
         // By drawing it with a global alpha that we don't strictly need if the array is short,
         // but we can achieve a fade by drawing segments with different alphas if we wanted.
@@ -83,14 +83,14 @@ const YarnTrail = ({ color = "#ff007f" }) => {
     render()
 
     return () => {
-      window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener("resize", resize)
+      window.removeEventListener("mousemove", handleMouseMove)
       cancelAnimationFrame(animationFrameId)
     }
   }, [color])
 
   return (
-    <canvas 
+    <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-9998"
     />

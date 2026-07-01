@@ -1,13 +1,13 @@
-import React, { useRef, useMemo, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useRef, useMemo, useState } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import { useTexture } from "@react-three/drei"
+import * as THREE from "three"
 
 const FabricShaderMaterial = {
   uniforms: {
     uTime: { value: 0 },
     uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-    uTexture: { value: null }
+    uTexture: { value: null },
   },
   vertexShader: `
     uniform float uTime;
@@ -49,53 +49,58 @@ const FabricShaderMaterial = {
       
       gl_FragColor = texColor;
     }
-  `
-};
+  `,
+}
 
 const FabricMesh = () => {
-  const meshRef = useRef();
-  const materialRef = useRef();
-  const texture = useTexture('https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg'); // Handloom texture
-  
-  // Keep track of smoothed mouse coordinates for buttery transitions
-  const targetMouse = useRef(new THREE.Vector2(0.5, 0.5));
-  const currentMouse = useRef(new THREE.Vector2(0.5, 0.5));
+  const meshRef = useRef()
+  const materialRef = useRef()
+  const texture = useTexture(
+    "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+  ) // Handloom texture
 
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-    uTexture: { value: texture }
-  }), [texture]);
+  // Keep track of smoothed mouse coordinates for buttery transitions
+  const targetMouse = useRef(new THREE.Vector2(0.5, 0.5))
+  const currentMouse = useRef(new THREE.Vector2(0.5, 0.5))
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uTexture: { value: texture },
+    }),
+    [texture],
+  )
 
   useFrame((state) => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-      
+      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
+
       // Linear interpolation for smooth mouse trailing
-      currentMouse.current.lerp(targetMouse.current, 0.1);
-      materialRef.current.uniforms.uMouse.value.copy(currentMouse.current);
+      currentMouse.current.lerp(targetMouse.current, 0.1)
+      materialRef.current.uniforms.uMouse.value.copy(currentMouse.current)
     }
-  });
+  })
 
   const handlePointerMove = (e) => {
-    targetMouse.current.x = e.uv.x;
-    targetMouse.current.y = e.uv.y;
-  };
+    targetMouse.current.x = e.uv.x
+    targetMouse.current.y = e.uv.y
+  }
 
   const handlePointerLeave = () => {
     // Reset to center when mouse leaves
-    targetMouse.current.x = 0.5;
-    targetMouse.current.y = 0.5;
-  };
+    targetMouse.current.x = 0.5
+    targetMouse.current.y = 0.5
+  }
 
   return (
-    <mesh 
-      ref={meshRef} 
+    <mesh
+      ref={meshRef}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
     >
       <planeGeometry args={[16, 9, 128, 128]} />
-      <shaderMaterial 
+      <shaderMaterial
         ref={materialRef}
         vertexShader={FabricShaderMaterial.vertexShader}
         fragmentShader={FabricShaderMaterial.fragmentShader}
@@ -103,30 +108,37 @@ const FabricMesh = () => {
         wireframe={false}
       />
     </mesh>
-  );
-};
+  )
+}
 
 const InteractiveFabric3D = () => {
   return (
     <section className="relative w-full h-[80vh] bg-[#020202] flex items-center justify-center overflow-hidden cursor-none">
       {/* Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-        <h2 className="text-[12vw] font-serif font-black text-[#ff007f]/5 whitespace-nowrap">TOUCH THE LOOM</h2>
+        <h2 className="text-[12vw] font-serif font-black text-[#ff007f]/5 whitespace-nowrap">
+          TOUCH THE LOOM
+        </h2>
       </div>
 
       {/* WebGL Canvas */}
-      <div className="relative z-10 w-full h-full max-w-7xl mx-auto" data-cursor-text="DRAG">
+      <div
+        className="relative z-10 w-full h-full max-w-7xl mx-auto"
+        data-cursor-text="DRAG"
+      >
         <Canvas camera={{ position: [0, 0, 4.5], fov: 75 }}>
           <ambientLight intensity={1} />
           <FabricMesh />
         </Canvas>
       </div>
-      
+
       <div className="absolute bottom-10 text-center w-full z-20 pointer-events-none">
-        <p className="text-[#FAF9F6] tracking-widest text-sm uppercase opacity-50">Interact with the digital weave</p>
+        <p className="text-[#FAF9F6] tracking-widest text-sm uppercase opacity-50">
+          Interact with the digital weave
+        </p>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default InteractiveFabric3D;
+export default InteractiveFabric3D

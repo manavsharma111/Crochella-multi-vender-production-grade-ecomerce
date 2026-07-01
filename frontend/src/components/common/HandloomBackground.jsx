@@ -11,7 +11,7 @@ const parameters = {
   randomness: 0.4,
   randomnessPower: 3,
   insideColor: "#ff8c00",
-  outsideColor: "#00ced1"
+  outsideColor: "#00ced1",
 }
 
 function Galaxy() {
@@ -29,11 +29,24 @@ function Galaxy() {
 
       const radius = Math.random() * parameters.radius
       const spinAngle = radius * parameters.spin
-      const branchAngle = ((i % parameters.branches) / parameters.branches) * Math.PI * 2
+      const branchAngle =
+        ((i % parameters.branches) / parameters.branches) * Math.PI * 2
 
-      const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius
-      const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius
-      const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * parameters.randomness * radius
+      const randomX =
+        Math.pow(Math.random(), parameters.randomnessPower) *
+        (Math.random() < 0.5 ? 1 : -1) *
+        parameters.randomness *
+        radius
+      const randomY =
+        Math.pow(Math.random(), parameters.randomnessPower) *
+        (Math.random() < 0.5 ? 1 : -1) *
+        parameters.randomness *
+        radius
+      const randomZ =
+        Math.pow(Math.random(), parameters.randomnessPower) *
+        (Math.random() < 0.5 ? 1 : -1) *
+        parameters.randomness *
+        radius
 
       positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX
       positions[i3 + 1] = randomY * 0.3

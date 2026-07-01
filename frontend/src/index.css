@@ -2,16 +2,17 @@
 
 /* Fix for Chrome Autofill background color overriding our dark theme */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s !important;
-    -webkit-text-fill-color: white !important;
-    caret-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
 }
 
-button, a {
-    cursor: pointer !important;
+button,
+a {
+  cursor: pointer !important;
 }
 
 /* Custom sleek scrollbar for chat and other small components */

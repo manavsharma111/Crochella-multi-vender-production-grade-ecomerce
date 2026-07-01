@@ -35,9 +35,7 @@ const GridList = () => {
 
       <div
         className={`gap-4 ${
-          isGrid
-            ? "grid grid-cols-2 md:grid-cols-3"
-            : "flex flex-col"
+          isGrid ? "grid grid-cols-2 md:grid-cols-3" : "flex flex-col"
         }`}
       >
         {products.map((item) => (

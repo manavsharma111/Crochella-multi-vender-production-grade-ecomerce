@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence, usePresence } from 'framer-motion'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { logoutUser } from '../../redux/slices/authSlice'
-import Login from './login'
-import Signup from './signup'
-import ForgotPassword from './ForgotPassword'
+import React, { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, usePresence } from "framer-motion"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { logoutUser } from "../../redux/slices/authSlice"
+import Login from "./login"
+import Signup from "./signup"
+import ForgotPassword from "./ForgotPassword"
 
 const Auth = () => {
   const navigate = useNavigate()
@@ -25,25 +25,25 @@ const Auth = () => {
     enter: (direction) => ({
       rotateY: direction > 0 ? -90 : 90,
       opacity: 0,
-      z: -100
+      z: -100,
     }),
     center: {
       rotateY: 0,
       opacity: 1,
-      z: 0
+      z: 0,
     },
     exit: (direction) => ({
       rotateY: direction < 0 ? -90 : 90,
       opacity: 0,
-      z: -100
-    })
+      z: -100,
+    }),
   }
 
   // Determine current view
-  let currentView = 'login'
-  if (isAuthenticated && user) currentView = 'profile'
-  else if (isForgotPassword) currentView = 'forgotPassword'
-  else if (!isLogin) currentView = 'signup'
+  let currentView = "login"
+  if (isAuthenticated && user) currentView = "profile"
+  else if (isForgotPassword) currentView = "forgotPassword"
+  else if (!isLogin) currentView = "signup"
 
   // to prevent Framer Motion crashes
   if (!isPresent) {
@@ -56,7 +56,7 @@ const Auth = () => {
   return (
     <div className="relative w-full" style={{ perspective: 1000 }}>
       <AnimatePresence mode="wait" custom={isLogin ? 1 : -1}>
-        {currentView === 'profile' && (
+        {currentView === "profile" && (
           <motion.div
             key="profile"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -67,10 +67,14 @@ const Auth = () => {
           >
             <div className="w-16 h-16 mx-auto mb-4 rounded-full border-2 border-[#ff007f] overflow-hidden">
               {user.profileImage ? (
-                <img src={user.profileImage} alt={user.name} className="w-full h-full object-cover" />
+                <img
+                  src={user.profileImage}
+                  alt={user.name}
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <div className="w-full h-full bg-white/10 flex items-center justify-center text-white font-bold text-xl uppercase">
-                  {user.name ? user.name[0] : 'U'}
+                  {user.name ? user.name[0] : "U"}
                 </div>
               )}
             </div>
@@ -81,29 +85,30 @@ const Auth = () => {
             <p className="text-gray-400 text-xs mb-6 truncate">{user.email}</p>
 
             <div className="space-y-3">
-              {(user.role === 'admin' || user.role === 'seller') && (
-                <button 
-                  onClick={() => navigate('/admin/dashboard')}
+              {(user.role === "admin" || user.role === "seller") && (
+                <button
+                  onClick={() => navigate("/admin/dashboard")}
                   className="w-full bg-white/5 border cursor-pointer border-[#ff007f]/50 text-[#ff007f] font-black text-xs uppercase tracking-widest py-3 rounded-xl hover:bg-[#ff007f]/10 transition-all"
                 >
                   Admin Dashboard
                 </button>
               )}
-              {user.role === 'delivery_boy' && (
-                <button 
-                  onClick={() => navigate('/delivery/dashboard')}
+              {user.role === "delivery_boy" && (
+                <button
+                  onClick={() => navigate("/delivery/dashboard")}
                   className="w-full bg-white/5 border cursor-pointer border-orange-400/50 text-orange-400 font-black text-xs uppercase tracking-widest py-3 rounded-xl hover:bg-orange-400/10 transition-all"
                 >
                   🛵 Delivery Dashboard
                 </button>
               )}
-              <button 
-                onClick={() => navigate('/profile')}
-                className="w-full bg-white/5 border cursor-pointer border-white/10 text-white font-bold text-xs uppercase tracking-widest py-3 rounded-xl hover:bg-white/10 transition-all">
+              <button
+                onClick={() => navigate("/profile")}
+                className="w-full bg-white/5 border cursor-pointer border-white/10 text-white font-bold text-xs uppercase tracking-widest py-3 rounded-xl hover:bg-white/10 transition-all"
+              >
                 My Orders
               </button>
-              <button 
-                onClick={() => navigate('/profile')}
+              <button
+                onClick={() => navigate("/profile")}
                 className="w-full bg-white/5 border cursor-pointer border-white/10 text-white font-bold text-xs uppercase tracking-widest py-3 rounded-xl hover:bg-white/10 transition-all"
               >
                 Profile
@@ -118,7 +123,7 @@ const Auth = () => {
           </motion.div>
         )}
 
-        {currentView === 'login' && (
+        {currentView === "login" && (
           <motion.div
             key="login"
             custom={1}
@@ -144,7 +149,7 @@ const Auth = () => {
           </motion.div>
         )}
 
-        {currentView === 'signup' && (
+        {currentView === "signup" && (
           <motion.div
             key="signup"
             custom={-1}
@@ -170,7 +175,7 @@ const Auth = () => {
           </motion.div>
         )}
 
-        {currentView === 'forgotPassword' && (
+        {currentView === "forgotPassword" && (
           <motion.div
             key="forgotPassword"
             custom={1}

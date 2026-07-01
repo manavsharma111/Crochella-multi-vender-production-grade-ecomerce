@@ -1,11 +1,16 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProductReviewsAsync, socketAddReview, socketUpdateReview, socketDeleteReview } from '../../../redux/slices/reviewSlice'
-import { io } from 'socket.io-client'
-import StarRating from './StarRating'
-import ReviewForm from './ReviewForm'
-import ReviewList from './ReviewList'
-import { motion } from 'framer-motion'
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  getProductReviewsAsync,
+  socketAddReview,
+  socketUpdateReview,
+  socketDeleteReview,
+} from "../../../redux/slices/reviewSlice"
+import { io } from "socket.io-client"
+import StarRating from "./StarRating"
+import ReviewForm from "./ReviewForm"
+import ReviewList from "./ReviewList"
+import { motion } from "framer-motion"
 
 const ReviewSection = ({ productId }) => {
   const dispatch = useDispatch()
@@ -16,20 +21,20 @@ const ReviewSection = ({ productId }) => {
       dispatch(getProductReviewsAsync(productId))
 
       const socket = io(import.meta.env.VITE_BACKEND_URL, {
-        withCredentials: true
+        withCredentials: true,
       })
 
-      socket.emit('joinProductRoom', productId)
+      socket.emit("joinProductRoom", productId)
 
-      socket.on('newReview', (review) => {
+      socket.on("newReview", (review) => {
         dispatch(socketAddReview(review))
       })
 
-      socket.on('updateReview', (review) => {
+      socket.on("updateReview", (review) => {
         dispatch(socketUpdateReview(review))
       })
 
-      socket.on('deleteReview', (reviewId) => {
+      socket.on("deleteReview", (reviewId) => {
         dispatch(socketDeleteReview(reviewId))
       })
 
@@ -40,9 +45,12 @@ const ReviewSection = ({ productId }) => {
   }, [dispatch, productId])
 
   const totalReviews = reviews.length
-  const averageRating = totalReviews > 0
-    ? (reviews.reduce((acc, curr) => acc + curr.rating, 0) / totalReviews).toFixed(1)
-    : 0
+  const averageRating =
+    totalReviews > 0
+      ? (
+          reviews.reduce((acc, curr) => acc + curr.rating, 0) / totalReviews
+        ).toFixed(1)
+      : 0
 
   return (
     <div className="w-full mt-8 lg:mt-12">
@@ -54,12 +62,18 @@ const ReviewSection = ({ productId }) => {
         className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-10 pb-6 border-b border-gray-800"
       >
         <div>
-          <h2 className="text-3xl font-black text-white uppercase tracking-widest mb-4">Customer Reviews</h2>
+          <h2 className="text-3xl font-black text-white uppercase tracking-widest mb-4">
+            Customer Reviews
+          </h2>
           <div className="flex items-center gap-4">
-            <div className="text-5xl font-black text-[#ff007f]">{averageRating}</div>
+            <div className="text-5xl font-black text-[#ff007f]">
+              {averageRating}
+            </div>
             <div>
               <StarRating rating={Number(averageRating)} readonly size={20} />
-              <p className="text-sm text-gray-500 font-bold mt-1">Based on {totalReviews} reviews</p>
+              <p className="text-sm text-gray-500 font-bold mt-1">
+                Based on {totalReviews} reviews
+              </p>
             </div>
           </div>
         </div>

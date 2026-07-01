@@ -1,10 +1,15 @@
-import React, { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import React, { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
 gsap.registerPlugin(ScrollTrigger)
 
-const ColorMorphSection = ({ children, color = "#2a0013", defaultColor = "#0a0a0a", className = "" }) => {
+const ColorMorphSection = ({
+  children,
+  color = "#2a0013",
+  defaultColor = "#0a0a0a",
+  className = "",
+}) => {
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -13,10 +18,34 @@ const ColorMorphSection = ({ children, color = "#2a0013", defaultColor = "#0a0a0
         trigger: sectionRef.current,
         start: "top 40%",
         end: "bottom 60%",
-        onEnter: () => gsap.to(document.body, { backgroundColor: color, duration: 1, ease: "power2.out", overwrite: "auto" }),
-        onLeave: () => gsap.to(document.body, { backgroundColor: defaultColor, duration: 1, ease: "power2.out", overwrite: "auto" }),
-        onEnterBack: () => gsap.to(document.body, { backgroundColor: color, duration: 1, ease: "power2.out", overwrite: "auto" }),
-        onLeaveBack: () => gsap.to(document.body, { backgroundColor: defaultColor, duration: 1, ease: "power2.out", overwrite: "auto" }),
+        onEnter: () =>
+          gsap.to(document.body, {
+            backgroundColor: color,
+            duration: 1,
+            ease: "power2.out",
+            overwrite: "auto",
+          }),
+        onLeave: () =>
+          gsap.to(document.body, {
+            backgroundColor: defaultColor,
+            duration: 1,
+            ease: "power2.out",
+            overwrite: "auto",
+          }),
+        onEnterBack: () =>
+          gsap.to(document.body, {
+            backgroundColor: color,
+            duration: 1,
+            ease: "power2.out",
+            overwrite: "auto",
+          }),
+        onLeaveBack: () =>
+          gsap.to(document.body, {
+            backgroundColor: defaultColor,
+            duration: 1,
+            ease: "power2.out",
+            overwrite: "auto",
+          }),
       })
     }, sectionRef)
 
@@ -31,7 +60,7 @@ const ColorMorphSection = ({ children, color = "#2a0013", defaultColor = "#0a0a0
     <div ref={sectionRef} className={className}>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default ColorMorphSection;
+export default ColorMorphSection

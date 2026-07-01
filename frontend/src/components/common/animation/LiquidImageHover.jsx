@@ -1,12 +1,12 @@
-import React, { useState, useId } from 'react'
-import { motion } from 'framer-motion'
+import React, { useState, useId } from "react"
+import { motion } from "framer-motion"
 
 const LiquidImageHover = ({ src, alt, className }) => {
   const [isHovered, setIsHovered] = useState(false)
-  const filterId = useId().replace(/:/g, '') // Ensure safe ID for SVG
+  const filterId = useId().replace(/:/g, "") // Ensure safe ID for SVG
 
   return (
-    <div 
+    <div
       className={`relative overflow-hidden ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

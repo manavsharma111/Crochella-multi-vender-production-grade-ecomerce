@@ -1,8 +1,9 @@
 <div align="center">
   <img src="frontend/public/logo.svg" alt="Crochella Logo" width="200" />
 
-  # 🌟 Crochella
-  ### The Next-Generation Multi-Vendor Production Grade E-Commerce Platform
+# 🌟 Crochella
+
+### The Next-Generation Multi-Vendor Production Grade E-Commerce Platform
 
   <p align="center">
     A robust, highly scalable, and beautifully animated full-stack e-commerce architecture. <br/>
@@ -35,7 +36,9 @@
 ## 📦 Comprehensive Feature Modules
 
 ### 👑 1. Admin Control Panel
+
 The central nervous system of the platform, giving administrators full control:
+
 - **Comprehensive Dashboard**: Real-time sales analytics and graphical representations.
 - **User & Vendor Management**: Promote, ban, or assist users and sellers.
 - **Product & Order Moderation**: Oversee the entire catalog, manage product approvals, and resolve order disputes.
@@ -44,20 +47,25 @@ The central nervous system of the platform, giving administrators full control:
 - **Review Moderation**: Ensure high-quality user-generated content and ratings.
 
 ### 🚚 2. Dedicated Delivery Partner App
+
 A built-in workflow specifically for the delivery fleet:
+
 - **Delivery Dashboard**: View assigned deliveries and optimized routes.
 - **Live Tracking System**: Real-time GPS location broadcasting to the end customer.
 - **OTP Verification System**: Secure delivery handoffs using dynamic OTP prompts.
 - **Return Management**: Handle pickup requests, damaged goods, and reverse logistics seamlessly.
 
 ### 🛍️ 3. Advanced Shopping Experience
+
 Built for maximum conversion and user delight:
+
 - **Cinematic Landing Page**: Features artisan stories, handloom history timelines, and horizontal lookbooks.
 - **Dynamic Product Pages**: Includes deep-zoom galleries, interactive product accordions, and rich reviews.
 - **Smart Cart & Checkout**: Live coupon validation, multi-address management, and frictionless Razorpay payment gateways.
 - **Personalized Wishlists**: Custom collections and saved items for future purchases.
 
 ### 👤 4. Comprehensive User Profiles
+
 - **Order History & Tracking**: Detailed breakdown of past purchases with live tracking links for active orders.
 - **Return & Refund Portal**: Automated workflows to request returns with reason selection.
 - **Address Book & Security**: Manage multiple shipping addresses and update authentication credentials.
@@ -68,6 +76,7 @@ Built for maximum conversion and user delight:
 ## 💻 Tech Stack Overview
 
 ### 🎨 Frontend Architecture
+
 - **Framework:** React 19, Vite, React Router v7
 - **Styling:** Tailwind CSS v4, Lucide React, clsx, tailwind-merge
 - **State Management:** Redux Toolkit, Zustand
@@ -76,6 +85,7 @@ Built for maximum conversion and user delight:
 - **PWA Ready:** Configured via `vite-plugin-pwa` for offline capabilities and app-like feel.
 
 ### ⚙️ Backend Architecture
+
 - **Core Environment:** Node.js, Express.js (v5)
 - **Database:** MongoDB with Mongoose ODM
 - **Caching & Message Broker:** Redis (Upstash) for API Caching and distributed Rate Limiting
@@ -92,7 +102,9 @@ Built for maximum conversion and user delight:
 ## 🛠 Getting Started
 
 ### Prerequisites
+
 Ensure your development environment meets the following requirements:
+
 - **Node.js** (v18.0.0 or higher)
 - **MongoDB** (Local instance or MongoDB Atlas cluster)
 - **Git**
@@ -100,12 +112,14 @@ Ensure your development environment meets the following requirements:
 ### Installation
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/manavsharma111/Crochella-multi-vender-production-grade-ecomerce.git
    cd Crochella-multi-vender-production-grade-ecomerce
    ```
 
 2. **Install Backend Dependencies:**
+
    ```bash
    cd backend
    npm install
@@ -124,7 +138,9 @@ Ensure your development environment meets the following requirements:
 You must configure the `.env` files before running the application.
 
 ### Backend (`backend/.env`)
+
 Create a `.env` file in the `backend/` directory:
+
 ```env
 # Server Configuration
 PORT=5000
@@ -156,7 +172,9 @@ GOOGLE_GENAI_API_KEY=your_google_genai_api_key
 ```
 
 ### Frontend (`frontend/.env`)
+
 Create a `.env` file in the `frontend/` directory:
+
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 # Add any Vite-specific public keys for external APIs here
@@ -165,14 +183,16 @@ VITE_API_BASE_URL=http://localhost:5000/api
 ---
 
 ## ⚡ Running the Application
- 
+
 1. **Launch the Backend Server:**
+
    ```bash
    cd backend
    npm run dev
    ```
 
 2. **Launch the Frontend Development Server:**
+
    ```bash
    cd frontend
    npm run dev

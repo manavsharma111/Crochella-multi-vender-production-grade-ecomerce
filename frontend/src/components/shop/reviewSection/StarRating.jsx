@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Star } from 'lucide-react'
+import { useState } from "react"
+import { Star } from "lucide-react"
 
 const StarRating = ({ rating, setRating, readonly = false, size = 20 }) => {
   const [hover, setHover] = useState(0)
@@ -21,15 +21,17 @@ const StarRating = ({ rating, setRating, readonly = false, size = 20 }) => {
           onMouseEnter={() => !readonly && setHover(star)}
           disabled={readonly}
           className={`${
-            readonly ? 'cursor-default' : 'cursor-pointer active:scale-110 transition-transform'
+            readonly
+              ? "cursor-default"
+              : "cursor-pointer active:scale-110 transition-transform"
           } focus:outline-none select-none`}
         >
           <Star
             size={size}
             className={`${
               star <= (hover || rating)
-                ? 'fill-[#ff007f] text-[#ff007f]'
-                : 'fill-transparent text-gray-600'
+                ? "fill-[#ff007f] text-[#ff007f]"
+                : "fill-transparent text-gray-600"
             } transition-colors pointer-events-none`}
           />
         </button>

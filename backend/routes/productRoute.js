@@ -1,16 +1,45 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const { createProduct, getAllProducts, getProduct, updateProduct, deleteProduct, getLowStockProducts, getFlashSales, getFilterOptions } = require('../controller/product.controller')
-const { upload } = require('../config/cloudinary')
-const { authMiddleware, adminOrSellerMiddleware } = require('../middleware/auth.middleware')
-const { cacheMiddleware } = require('../middleware/cache.middleware')
+const {
+  createProduct,
+  getAllProducts,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+  getLowStockProducts,
+  getFlashSales,
+  getFilterOptions,
+} = require("../controller/product.controller")
+const { upload } = require("../config/cloudinary")
+const {
+  authMiddleware,
+  adminOrSellerMiddleware,
+} = require("../middleware/auth.middleware")
+const { cacheMiddleware } = require("../middleware/cache.middleware")
 
-router.post('/', authMiddleware, adminOrSellerMiddleware, upload.array('media', 10), createProduct)
-router.get('/filters', cacheMiddleware(86400), getFilterOptions)
-router.get('/', cacheMiddleware(3600), getAllProducts)
-router.get('/low-stock', authMiddleware, adminOrSellerMiddleware, getLowStockProducts)
-router.get('/flash-sales', cacheMiddleware(300), getFlashSales)
-router.get('/:id', cacheMiddleware(3600), getProduct)
-router.put('/:id', authMiddleware, adminOrSellerMiddleware, upload.array('media', 10), updateProduct)
-router.delete('/:id', authMiddleware, adminOrSellerMiddleware, deleteProduct)
+router.post(
+  "/",
+  authMiddleware,
+  adminOrSellerMiddleware,
+  upload.array("media", 10),
+  createProduct,
+)
+router.get("/filters", cacheMiddleware(86400), getFilterOptions)
+router.get("/", cacheMiddleware(3600), getAllProducts)
+router.get(
+  "/low-stock",
+  authMiddleware,
+  adminOrSellerMiddleware,
+  getLowStockProducts,
+)
+router.get("/flash-sales", cacheMiddleware(300), getFlashSales)
+router.get("/:id", cacheMiddleware(3600), getProduct)
+router.put(
+  "/:id",
+  authMiddleware,
+  adminOrSellerMiddleware,
+  upload.array("media", 10),
+  updateProduct,
+)
+router.delete("/:id", authMiddleware, adminOrSellerMiddleware, deleteProduct)
 module.exports = router

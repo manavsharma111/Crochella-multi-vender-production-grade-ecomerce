@@ -1,6 +1,10 @@
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense } from "react"
 
-const LazySection = ({ children, fallback = null, rootMargin = '800px 0px' }) => {
+const LazySection = ({
+  children,
+  fallback = null,
+  rootMargin = "800px 0px",
+}) => {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
 
@@ -22,7 +26,7 @@ const LazySection = ({ children, fallback = null, rootMargin = '800px 0px' }) =>
           }
         }
       },
-      { rootMargin } // Load when it's within rootMargin (e.g., 800px away)
+      { rootMargin }, // Load when it's within rootMargin (e.g., 800px away)
     )
 
     if (sectionRef.current) {
@@ -36,7 +40,11 @@ const LazySection = ({ children, fallback = null, rootMargin = '800px 0px' }) =>
 
   return (
     <div ref={sectionRef} className="lazy-section-wrapper min-h-[50vh]">
-      {isVisible ? <Suspense fallback={fallback}>{children}</Suspense> : fallback}
+      {isVisible ? (
+        <Suspense fallback={fallback}>{children}</Suspense>
+      ) : (
+        fallback
+      )}
     </div>
   )
 }

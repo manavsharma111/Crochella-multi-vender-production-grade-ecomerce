@@ -1,22 +1,30 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, Search, ShoppingBag, User, ShoppingCart, Heart, ChevronUp } from "lucide-react"
+import {
+  Home,
+  Search,
+  ShoppingBag,
+  User,
+  ShoppingCart,
+  Heart,
+  ChevronUp,
+} from "lucide-react"
 import AuthDropdown from "../Auth/Auth"
 
 const navItems = [
-  { id: "home",     label: "Home",     icon: Home,         path: "/" },
-  { id: "shop",     label: "Shop",     icon: ShoppingBag,  path: "/shop" },
-  { id: "cart",     label: "Cart",     icon: ShoppingCart, path: "/cart" },
-  { id: "wishlist", label: "Wishlist", icon: Heart,        path: "/wishlist" },
-  { id: "user",     label: "Account",  icon: User,         path: null },
+  { id: "home", label: "Home", icon: Home, path: "/" },
+  { id: "shop", label: "Shop", icon: ShoppingBag, path: "/shop" },
+  { id: "cart", label: "Cart", icon: ShoppingCart, path: "/cart" },
+  { id: "wishlist", label: "Wishlist", icon: Heart, path: "/wishlist" },
+  { id: "user", label: "Account", icon: User, path: null },
 ]
 
 export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [activeTab,    setActiveTab]    = useState("home")
+  const [activeTab, setActiveTab] = useState("home")
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   // Remember which tab was active before opening Account dropdown
@@ -24,7 +32,7 @@ export default function Navbar() {
 
   // Detect mobile vs desktop
   const [isMobile, setIsMobile] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
   )
   useEffect(() => {
     const handler = () => setIsMobile(window.innerWidth < 768)
@@ -36,7 +44,7 @@ export default function Navbar() {
   const [hoveredTab, setHoveredTab] = useState(null)
 
   // Timers for desktop hover intent
-  const openT  = useRef(null)
+  const openT = useRef(null)
   const closeT = useRef(null)
   const clearT = () => {
     clearTimeout(openT.current)
@@ -45,8 +53,11 @@ export default function Navbar() {
 
   // Sync pill with route
   useEffect(() => {
-    if (location.pathname.includes("/profile")) { setActiveTab("user"); return }
-    const m = navItems.find(i => i.path && i.path === location.pathname)
+    if (location.pathname.includes("/profile")) {
+      setActiveTab("user")
+      return
+    }
+    const m = navItems.find((i) => i.path && i.path === location.pathname)
     if (m) {
       setActiveTab(m.id)
       prevTab.current = m.id
@@ -54,7 +65,9 @@ export default function Navbar() {
   }, [location.pathname])
 
   // Close dropdown on route change
-  useEffect(() => { setDropdownOpen(false) }, [location.pathname])
+  useEffect(() => {
+    setDropdownOpen(false)
+  }, [location.pathname])
 
   // Desktop mouse handlers
   const desktopMouseEnter = (id) => {
@@ -92,7 +105,7 @@ export default function Navbar() {
   // Click / Tap handlers
   const handleMobileTap = (item) => {
     if (item.id === "user") {
-      setDropdownOpen(p => !p)
+      setDropdownOpen((p) => !p)
     } else {
       setDropdownOpen(false)
       navigate(item.path)
@@ -102,7 +115,7 @@ export default function Navbar() {
   const handleDesktopClick = (item) => {
     if (item.id === "user") {
       clearT()
-      setDropdownOpen(p => !p)
+      setDropdownOpen((p) => !p)
     } else {
       setDropdownOpen(false)
       navigate(item.path)
@@ -112,13 +125,13 @@ export default function Navbar() {
   const getPillActive = (id) => {
     if (isMobile) {
       // On mobile, keep the route tab lit unless dropdown is open
-      if (dropdownOpen) return id === "user";
-      return activeTab === id;
+      if (dropdownOpen) return id === "user"
+      return activeTab === id
     } else {
       // On desktop, prioritize dropdown, then hover, then active route
-      if (dropdownOpen) return id === "user";
-      if (hoveredTab) return hoveredTab === id;
-      return activeTab === id;
+      if (dropdownOpen) return id === "user"
+      if (hoveredTab) return hoveredTab === id
+      return activeTab === id
     }
   }
 
@@ -134,14 +147,16 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onPointerDown={() => { setActiveTab(prevTab.current); setDropdownOpen(false) }}
+            onPointerDown={() => {
+              setActiveTab(prevTab.current)
+              setDropdownOpen(false)
+            }}
           />
         )}
       </AnimatePresence>
 
       {/* Navbar container */}
       <div className="fixed bottom-6 md:bottom-auto md:top-8 left-1/2 -translate-x-1/2 z-50 flex justify-center select-none">
-
         {/* Pill bar */}
         <nav
           onMouseLeave={isMobile ? undefined : desktopMouseLeave}
@@ -149,19 +164,26 @@ export default function Navbar() {
         >
           {navItems.map((item) => {
             const isLit = getPillActive(item.id)
-            const Icon  = item.icon
+            const Icon = item.icon
 
             return (
               <button
                 key={item.id}
                 type="button"
                 // Mobile: instant pointer response
-                onPointerDown={isMobile ? () => handleMobileTap(item) : undefined}
+                onPointerDown={
+                  isMobile ? () => handleMobileTap(item) : undefined
+                }
                 // Desktop: click + hover
                 onClick={!isMobile ? () => handleDesktopClick(item) : undefined}
-                onMouseEnter={!isMobile ? () => desktopMouseEnter(item.id) : undefined}
+                onMouseEnter={
+                  !isMobile ? () => desktopMouseEnter(item.id) : undefined
+                }
                 className="relative flex items-center justify-center px-3 py-2.5 md:px-4 rounded-full outline-none"
-                style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
+                style={{
+                  WebkitTapHighlightColor: "transparent",
+                  touchAction: "manipulation",
+                }}
               >
                 {/* Pill glow */}
                 <AnimatePresence>
@@ -172,18 +194,27 @@ export default function Navbar() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ type: "spring", bounce: 0.1, duration: 0.4 }}
+                      transition={{
+                        type: "spring",
+                        bounce: 0.1,
+                        duration: 0.4,
+                      }}
                     />
                   )}
                 </AnimatePresence>
 
-                <span className={`relative z-10 flex items-center gap-2 transition-colors duration-200 ${isLit ? "text-white" : "text-gray-400"}`}>
+                <span
+                  className={`relative z-10 flex items-center gap-2 transition-colors duration-200 ${isLit ? "text-white" : "text-gray-400"}`}
+                >
                   <Icon size={19} strokeWidth={isLit ? 2.5 : 1.8} />
 
                   {/* Desktop label */}
                   <motion.span
                     initial={false}
-                    animate={{ width: isLit ? "auto" : 0, opacity: isLit ? 1 : 0 }}
+                    animate={{
+                      width: isLit ? "auto" : 0,
+                      opacity: isLit ? 1 : 0,
+                    }}
                     transition={{ type: "spring", bounce: 0.1, duration: 0.35 }}
                     className="hidden md:block overflow-hidden whitespace-nowrap text-sm font-semibold tracking-wide"
                   >
@@ -194,7 +225,11 @@ export default function Navbar() {
                   {item.id === "user" && (
                     <motion.span
                       animate={{ rotate: dropdownOpen ? 0 : 180 }}
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+                      transition={{
+                        type: "spring",
+                        bounce: 0.2,
+                        duration: 0.35,
+                      }}
                       className="hidden md:block"
                     >
                       <ChevronUp size={13} strokeWidth={2} />
@@ -214,7 +249,7 @@ export default function Navbar() {
               onMouseEnter={!isMobile ? dropdownMouseEnter : undefined}
               onMouseLeave={!isMobile ? dropdownMouseLeave : undefined}
               initial={{ opacity: 0, y: 10, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0,  scale: 1 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.96 }}
               transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
               className={[
@@ -229,7 +264,6 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </>
   )

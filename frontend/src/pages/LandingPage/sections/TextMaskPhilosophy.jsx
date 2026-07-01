@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useRef } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 const TextMaskPhilosophy = () => {
-  const containerRef = useRef(null);
-  const maskRef = useRef(null);
-  const containerMaskRef = useRef(null);
+  const containerRef = useRef(null)
+  const maskRef = useRef(null)
+  const containerMaskRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -18,24 +18,31 @@ const TextMaskPhilosophy = () => {
           start: "top top",
           end: "+=150%",
           scrub: 1,
-          pin: true
-        }
-      });
+          pin: true,
+        },
+      })
 
-      tl.to(maskRef.current, {
-        scale: 8, // Scale text up moderately
-        duration: 1,
-        ease: "power1.inOut"
-      }, 0)
-        .to(containerMaskRef.current, {
+      tl.to(
+        maskRef.current,
+        {
+          scale: 8, // Scale text up moderately
+          duration: 1,
+          ease: "power1.inOut",
+        },
+        0,
+      ).to(
+        containerMaskRef.current,
+        {
           opacity: 0, // Fade out smoothly over the scroll
           duration: 0.6,
-          ease: "power1.inOut"
-        }, 0.4); // Start fading out later so the text gets big first
-    }, containerRef);
+          ease: "power1.inOut",
+        },
+        0.4,
+      ) // Start fading out later so the text gets big first
+    }, containerRef)
 
-    return () => ctx.revert();
-  }, []);
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section
@@ -64,9 +71,8 @@ const TextMaskPhilosophy = () => {
           THE ESSENCE
         </h2>
       </div>
-
     </section>
-  );
-};
+  )
+}
 
-export default TextMaskPhilosophy;
+export default TextMaskPhilosophy

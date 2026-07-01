@@ -1,4 +1,9 @@
-import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+} from "framer-motion"
 
 // tilt card transition
 
@@ -32,7 +37,7 @@ const TiltCard = ({ className, children }) => {
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       whileTap={{ scale: 0.97 }}
-      style={{ transformStyle: 'preserve-3d', transform }}
+      style={{ transformStyle: "preserve-3d", transform }}
     >
       {children}
     </motion.div>
@@ -40,4 +45,3 @@ const TiltCard = ({ className, children }) => {
 }
 
 export default TiltCard
-

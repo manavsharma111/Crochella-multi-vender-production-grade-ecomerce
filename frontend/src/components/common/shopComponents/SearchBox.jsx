@@ -1,11 +1,14 @@
-import { Search as SearchIcon } from 'lucide-react'
+import { Search as SearchIcon } from "lucide-react"
 
-const SearchBox = ({ searchQuery, setSearchQuery, className = '' }) => {
+const SearchBox = ({ searchQuery, setSearchQuery, className = "" }) => {
   return (
     <div className={`relative group ${className}`}>
-      <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors" size={14} />
-      <input 
-        type="text" 
+      <SearchIcon
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-white transition-colors"
+        size={14}
+      />
+      <input
+        type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

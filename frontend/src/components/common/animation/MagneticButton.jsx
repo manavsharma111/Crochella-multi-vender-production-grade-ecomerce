@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 const MagneticButton = ({ children, className = "" }) => {
   const ref = useRef(null)

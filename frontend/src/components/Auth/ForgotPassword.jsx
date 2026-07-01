@@ -1,17 +1,21 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { sendOtpAsync, verifyOtpAsync, resetPasswordAsync } from '../../redux/slices/authSlice'
-import { toast } from 'react-hot-toast'
-import { Eye, EyeOff } from 'lucide-react'
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  sendOtpAsync,
+  verifyOtpAsync,
+  resetPasswordAsync,
+} from "../../redux/slices/authSlice"
+import { toast } from "react-hot-toast"
+import { Eye, EyeOff } from "lucide-react"
 
 const ForgotPassword = ({ onBack }) => {
-  const [email, setEmail] = useState('')
-  const [otp, setOtp] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [email, setEmail] = useState("")
+  const [otp, setOtp] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  
+
   const dispatch = useDispatch()
   const { isLoading, error } = useSelector((state) => state.auth)
 
@@ -21,7 +25,7 @@ const ForgotPassword = ({ onBack }) => {
       return
     }
     dispatch(sendOtpAsync(email)).then((action) => {
-      if (action.meta.requestStatus === 'fulfilled') {
+      if (action.meta.requestStatus === "fulfilled") {
         toast.success("OTP sent to your email!")
       } else {
         toast.error(action.payload || "Failed to send OTP")
@@ -36,9 +40,12 @@ const ForgotPassword = ({ onBack }) => {
       return
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if (!passwordRegex.test(newPassword)) {
-      toast.error("Password must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number & 1 special char.")
+      toast.error(
+        "Password must contain at least 8 chars, 1 uppercase, 1 lowercase, 1 number & 1 special char.",
+      )
       return
     }
 
@@ -46,21 +53,23 @@ const ForgotPassword = ({ onBack }) => {
       toast.error("Please enter the OTP!")
       return
     }
-    
+
     // Verify OTP
     const verifyAction = await dispatch(verifyOtpAsync({ email, otp }))
-    if (verifyAction.meta.requestStatus !== 'fulfilled') {
-       toast.error(verifyAction.payload || "Invalid OTP")
-       return
+    if (verifyAction.meta.requestStatus !== "fulfilled") {
+      toast.error(verifyAction.payload || "Invalid OTP")
+      return
     }
 
     // Reset Password
-    const resetAction = await dispatch(resetPasswordAsync({ email, password: newPassword }))
-    if (resetAction.meta.requestStatus === 'fulfilled') {
-       toast.success("Password reset successfully! Please login.")
-       onBack() 
+    const resetAction = await dispatch(
+      resetPasswordAsync({ email, password: newPassword }),
+    )
+    if (resetAction.meta.requestStatus === "fulfilled") {
+      toast.success("Password reset successfully! Please login.")
+      onBack()
     } else {
-       toast.error(resetAction.payload || "Failed to reset password")
+      toast.error(resetAction.payload || "Failed to reset password")
     }
   }
 
@@ -76,9 +85,11 @@ const ForgotPassword = ({ onBack }) => {
         <h2 className="text-2xl font-black text-white tracking-widest font-sans">
           RECOVER<span className="text-[#ff007f]">[X]</span>
         </h2>
-        <p className="text-gray-400 text-xs mt-1 uppercase tracking-widest">Reset your password</p>
+        <p className="text-gray-400 text-xs mt-1 uppercase tracking-widest">
+          Reset your password
+        </p>
       </div>
-      
+
       {error && (
         <div className="mb-4 text-[10px] uppercase tracking-wider text-center text-[#ff007f] bg-[#ff007f]/10 border border-[#ff007f]/20 py-2 rounded-lg font-bold">
           {error}
@@ -87,9 +98,11 @@ const ForgotPassword = ({ onBack }) => {
 
       <form onSubmit={handleResetPassword} className="flex flex-col gap-3">
         <div>
-          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">Email</label>
-          <input 
-            type="email" 
+          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+            Email
+          </label>
+          <input
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all"
@@ -97,19 +110,21 @@ const ForgotPassword = ({ onBack }) => {
             required
           />
         </div>
-        
+
         <div>
-          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">OTP Verification</label>
+          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+            OTP Verification
+          </label>
           <div className="flex gap-2">
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all"
               placeholder="123456"
               required
             />
-            <button 
+            <button
               type="button"
               onClick={handleSendOtp}
               disabled={isLoading || !email}
@@ -121,10 +136,12 @@ const ForgotPassword = ({ onBack }) => {
         </div>
 
         <div>
-          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">New Password</label>
+          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+            New Password
+          </label>
           <div className="relative">
-            <input 
-              type={showNewPassword ? "text" : "password"} 
+            <input
+              type={showNewPassword ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all pr-10"
@@ -141,10 +158,12 @@ const ForgotPassword = ({ onBack }) => {
           </div>
         </div>
         <div>
-          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">Confirm New Password</label>
+          <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+            Confirm New Password
+          </label>
           <div className="relative">
-            <input 
-              type={showConfirmPassword ? "text" : "password"} 
+            <input
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all pr-10"
@@ -160,8 +179,8 @@ const ForgotPassword = ({ onBack }) => {
             </button>
           </div>
         </div>
-        
-        <button 
+
+        <button
           type="submit"
           disabled={isLoading}
           className="mt-2 w-full bg-[#ff007f] text-white font-black uppercase tracking-widest py-3 rounded-xl shadow-[0_0_20px_rgba(255,0,127,0.4)] hover:shadow-[0_0_30px_rgba(255,0,127,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100"
@@ -169,7 +188,7 @@ const ForgotPassword = ({ onBack }) => {
           Reset Password
         </button>
 
-        <button 
+        <button
           type="button"
           onClick={onBack}
           className="mt-2 text-[10px] text-gray-500 hover:text-white transition-colors uppercase tracking-wider font-bold text-center w-full"
