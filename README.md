@@ -13,9 +13,9 @@
   <p align="center">
     <a href="#-core-features">Features</a> •
     <a href="#-comprehensive-feature-modules">Modules</a> •
+    <a href="#-deep-technical-features">Technical Deep Dive</a> •
     <a href="#-tech-stack">Tech Stack</a> •
-    <a href="#-getting-started">Getting Started</a> •
-    <a href="#-environment-variables">Environment Setup</a>
+    <a href="#-getting-started">Getting Started</a>
   </p>
 </div>
 
@@ -36,47 +36,55 @@
 ## 📦 Comprehensive Feature Modules
 
 ### 👑 1. Admin Control Panel
-
 The central nervous system of the platform, giving administrators full control:
-
-- **Comprehensive Dashboard**: Real-time sales analytics and graphical representations.
-- **User & Vendor Management**: Promote, ban, or assist users and sellers.
+- **Comprehensive Dashboard**: Real-time sales analytics, charts, and graphical representations.
+- **User & Vendor Management**: Promote, ban, track active status, or assist users and sellers.
 - **Product & Order Moderation**: Oversee the entire catalog, manage product approvals, and resolve order disputes.
-- **Delivery Staff Management**: Assign, track, and manage the delivery fleet.
-- **Coupon & Marketing Engine**: Create complex discount logic, promo codes, and sales campaigns.
-- **Review Moderation**: Ensure high-quality user-generated content and ratings.
+- **Delivery Staff Management**: Assign deliveries, track live location, and view delivery staff statistics & ratings.
+- **Coupon & Marketing Engine**: Create complex discount logic, promo codes with expiry, and sales campaigns.
+- **Review Moderation**: Ensure high-quality user-generated content and product/delivery ratings.
 
 ### 🚚 2. Dedicated Delivery Partner App
-
 A built-in workflow specifically for the delivery fleet:
-
-- **Delivery Dashboard**: View assigned deliveries and optimized routes.
-- **Live Tracking System**: Real-time GPS location broadcasting to the end customer.
-- **OTP Verification System**: Secure delivery handoffs using dynamic OTP prompts.
-- **Return Management**: Handle pickup requests, damaged goods, and reverse logistics seamlessly.
+- **Delivery Dashboard**: View assigned deliveries, accept available orders, and get optimized routes.
+- **Live Tracking System**: Real-time GPS location broadcasting to the end customer using Socket.io.
+- **OTP Verification System**: Secure delivery handoffs using dynamic OTP prompts sent via email.
+- **Return Management**: Handle pickup requests, damaged goods, accept returns, and confirm collections seamlessly.
 
 ### 🛍️ 3. Advanced Shopping Experience
-
 Built for maximum conversion and user delight:
-
 - **Cinematic Landing Page**: Features artisan stories, handloom history timelines, and horizontal lookbooks.
-- **Dynamic Product Pages**: Includes deep-zoom galleries, interactive product accordions, and rich reviews.
+- **Dynamic Product Pages**: Includes deep-zoom galleries, interactive product accordions, recently viewed items, and rich reviews.
 - **Smart Cart & Checkout**: Live coupon validation, multi-address management, and frictionless Razorpay payment gateways.
-- **Personalized Wishlists**: Custom collections and saved items for future purchases.
+- **Personalized Wishlists**: Custom user-defined wishlist collections and saved items for future purchases.
 
 ### 👤 4. Comprehensive User Profiles
-
 - **Order History & Tracking**: Detailed breakdown of past purchases with live tracking links for active orders.
 - **Return & Refund Portal**: Automated workflows to request returns with reason selection.
-- **Address Book & Security**: Manage multiple shipping addresses and update authentication credentials.
-- **Notification Hub**: A centralized inbox for order updates, promotional messages, and system alerts.
+- **Address Book & Security**: Manage multiple shipping addresses, update authentication credentials, profile images (with 5MB validation limit).
+- **Notification Hub**: A centralized inbox for order updates, promotional messages, and system alerts via Web Push.
+
+---
+
+## 🔐 Deep Technical Features (Under the Hood)
+
+To ensure a production-grade architecture, Crochella implements several granular, backend-heavy features:
+
+- **Advanced Token Management**: Uses strict **Access Tokens** alongside **Refresh Tokens** to maintain secure, long-lived sessions without compromising security.
+- **Passport.js OAuth Flows**: Seamless integration for **Google**, **Facebook**, and **Twitter** logins, automatically linking with local accounts.
+- **Active User Tracking**: Monitors and reflects if users/agents are currently "Online" or "Offline".
+- **Secure Redis Blacklisting**: When a user logs out, their JWT token is instantly blacklisted in Redis to prevent any malicious reuse.
+- **Strict Role-Based Access Control (RBAC)**: Individual middleware barriers (`adminMiddleware`, `sellerMiddleware`, `deliveryBoyMiddleware`) ensuring route-level isolation.
+- **Automated Background Jobs**: `BullMQ` combined with Redis handles heavy tasks like dispatching Nodemailer emails (OTPs, Invoices) so the main thread never blocks.
+- **Cron Jobs**: `node-cron` routines regularly clean up expired OTPs, manage temporary tokens, and perform database maintenance.
+- **Password Security**: Utilizing robust hashing with `bcrypt` / `bcryptjs`.
+- **Infrastructure Protection**: Shielded via `express-mongo-sanitize` (against NoSQL injections) and `rate-limit-redis` (against brute force attacks).
 
 ---
 
 ## 💻 Tech Stack Overview
 
 ### 🎨 Frontend Architecture
-
 - **Framework:** React 19, Vite, React Router v7
 - **Styling:** Tailwind CSS v4, Lucide React, clsx, tailwind-merge
 - **State Management:** Redux Toolkit, Zustand
@@ -85,41 +93,35 @@ Built for maximum conversion and user delight:
 - **PWA Ready:** Configured via `vite-plugin-pwa` for offline capabilities and app-like feel.
 
 ### ⚙️ Backend Architecture
-
 - **Core Environment:** Node.js, Express.js (v5)
 - **Database:** MongoDB with Mongoose ODM
-- **Caching & Message Broker:** Redis (Upstash) for API Caching and distributed Rate Limiting
-- **Background Jobs:** BullMQ for asynchronous task processing (e.g., Email Queues)
-- **Authentication:** Passport.js (Google, Facebook, Twitter OAuth), JWT (with Redis Blacklisting for secure logouts), bcrypt
+- **Caching & Message Broker:** Redis (Upstash) for API Caching, Sockets, and distributed Rate Limiting
+- **Background Jobs:** BullMQ for asynchronous task processing (e.g., Email Queues), node-cron
+- **Authentication:** Passport.js (Google, Facebook, Twitter OAuth), JWT (with Refresh Tokens & Redis Blacklisting), bcrypt
 - **Real-Time Engine:** Socket.io (with Redis Adapter for horizontal scaling)
 - **Payment Gateway:** Razorpay SDK
 - **AI Integrations:** `@google/genai`, `openai`, `groq-sdk`
 - **File Management:** Multer, Cloudinary
-- **Utilities:** PDFKit (Invoicing), Nodemailer (Emails via Queue), Web-Push (Browser Notifications)
+- **Utilities:** PDFKit (Invoicing), Nodemailer (Emails), Web-Push (Browser Notifications)
 
 ---
 
 ## 🛠 Getting Started
 
 ### Prerequisites
-
-Ensure your development environment meets the following requirements:
-
 - **Node.js** (v18.0.0 or higher)
-- **MongoDB** (Local instance or MongoDB Atlas cluster)
+- **MongoDB**
 - **Git**
 
 ### Installation
 
 1. **Clone the repository:**
-
    ```bash
    git clone https://github.com/manavsharma111/Crochella-multi-vender-production-grade-ecomerce.git
    cd Crochella-multi-vender-production-grade-ecomerce
    ```
 
 2. **Install Backend Dependencies:**
-
    ```bash
    cd backend
    npm install
@@ -138,15 +140,11 @@ Ensure your development environment meets the following requirements:
 You must configure the `.env` files before running the application.
 
 ### Backend (`backend/.env`)
-
 Create a `.env` file in the `backend/` directory:
 
 ```env
-# Server Configuration
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-
-# Security, Auth & Caching
 JWT_SECRET=your_super_secret_jwt_key
 REDIS_URI=rediss://default:your_token@your_upstash_domain:6379
 GOOGLE_CLIENT_ID=your_google_client_id
@@ -155,29 +153,21 @@ FACEBOOK_CLIENT_ID=your_facebook_client_id
 FACEBOOK_CLIENT_SECRET=your_facebook_client_secret
 TWITTER_CONSUMER_KEY=your_twitter_consumer_key
 TWITTER_CONSUMER_SECRET=your_twitter_consumer_secret
-
-# Payments
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-
-# Media Storage
 CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-
-# AI APIs
 OPENAI_API_KEY=your_openai_api_key
 GROQ_API_KEY=your_groq_api_key
 GOOGLE_GENAI_API_KEY=your_google_genai_api_key
 ```
 
 ### Frontend (`frontend/.env`)
-
 Create a `.env` file in the `frontend/` directory:
 
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
-# Add any Vite-specific public keys for external APIs here
 ```
 
 ---
@@ -185,24 +175,20 @@ VITE_API_BASE_URL=http://localhost:5000/api
 ## ⚡ Running the Application
 
 1. **Launch the Backend Server:**
-
    ```bash
    cd backend
    npm run dev
    ```
 
-2. **Launch the Frontend Development Server:**
-
+2. **Launch the Frontend Server:**
    ```bash
    cd frontend
    npm run dev
    ```
 
-3. **Access the Platform:**
-   Open your browser and navigate to `http://localhost:5173`.
+3. **Access the Platform:** Open `http://localhost:5173`.
 
 ---
-
 <div align="center">
   <br />
   <i>Architected with precision for the modern web.</i>
