@@ -3,8 +3,8 @@ import { motion, AnimatePresence, usePresence } from "framer-motion"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { logoutUser } from "../../redux/slices/authSlice"
-import Login from "./login"
-import Signup from "./signup"
+import Login from "./Login"
+import Signup from "./Signup"
 import ForgotPassword from "./ForgotPassword"
 
 const Auth = () => {
