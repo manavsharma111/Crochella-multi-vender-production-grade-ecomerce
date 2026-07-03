@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser")
 const mongoSanitize = require("express-mongo-sanitize")
 const rateLimit = require("express-rate-limit")
 const { RedisStore } = require("rate-limit-redis")
-const redisClient = require("./config/redis")
+const { getRedisClient, getRedisClientSync } = require("./config/redis")
 const connectDB = require("./config/db.js")
 const userRoute = require("./routes/userRoute.js")
 const authRoute = require("./routes/authRoute.js")
@@ -70,8 +70,9 @@ app.use((req, res, next) => {
   next()
 })
 
-// ─── Database ─────────────────────────────────────────────────────────────────
+// ─── Database & Redis (lazy init) ────────────────────────────────────────────
 connectDB()
+getRedisClient().catch((err) => console.warn("Redis init skipped:", err?.message))
 
 // ─── Core Middlewares ──────────────────────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }))
@@ -101,7 +102,13 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes",
   ...(process.env.REDIS_URI && {
     store: new RedisStore({
-      sendCommand: (...args) => redisClient.sendCommand(args),
+      sendCommand: (...args) => {
+        const client = getRedisClientSync()
+        if (!client || !client.isReady) {
+          throw new Error("Redis not ready")
+        }
+        return client.sendCommand(args)
+      },
     }),
   }),
 })

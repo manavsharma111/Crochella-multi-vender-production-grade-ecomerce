@@ -1,27 +1,44 @@
 const { createClient } = require("redis")
 
-const redisClient = createClient({
-  url: process.env.REDIS_URI,
-})
+let redisClient = null
+let connectPromise = null
 
-redisClient.on("error", (err) => console.log("Redis Client Error", err))
-redisClient.on("connect", () => console.log("Redis Client Connected"))
-
-// Connect to Redis immediately
-const connectRedis = async () => {
-  try {
-    if (!process.env.REDIS_URI) {
-      console.warn(
-        "REDIS_URI is not defined in .env. Redis caching will be skipped.",
-      )
-      return
-    }
-    await redisClient.connect()
-  } catch (error) {
-    console.error("Failed to connect to Redis:", error.message)
+/**
+ * Lazy Redis singleton — safe for Vercel serverless.
+ * Creates and connects the client only on first call.
+ */
+const getRedisClient = async () => {
+  if (!process.env.REDIS_URI) {
+    console.warn("REDIS_URI is not defined. Redis will be skipped.")
+    return null
   }
+
+  if (redisClient && redisClient.isReady) {
+    return redisClient
+  }
+
+  if (!connectPromise) {
+    redisClient = createClient({ url: process.env.REDIS_URI })
+
+    redisClient.on("error", (err) => console.error("Redis Client Error:", err.message))
+    redisClient.on("connect", () => console.log("Redis Client Connected"))
+
+    connectPromise = redisClient.connect().catch((err) => {
+      console.error("Failed to connect to Redis:", err.message)
+      redisClient = null
+      connectPromise = null
+      return null
+    })
+  }
+
+  await connectPromise
+  return redisClient
 }
 
-connectRedis()
+/**
+ * Synchronous getter — returns client only if already connected.
+ * Used by rate-limit-redis sendCommand.
+ */
+const getRedisClientSync = () => redisClient
 
-module.exports = redisClient
+module.exports = { getRedisClient, getRedisClientSync }
