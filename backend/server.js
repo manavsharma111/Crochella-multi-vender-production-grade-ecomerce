@@ -1,7 +1,6 @@
 const express = require("express")
 const dotenv = require("dotenv")
 dotenv.config()
-const http = require("http")
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
 const mongoSanitize = require("express-mongo-sanitize")
@@ -21,48 +20,70 @@ const paymentRoute = require("./routes/paymentRoute.js")
 const orderRoute = require("./routes/orderRoute.js")
 const couponRoute = require("./routes/couponRoute.js")
 const notificationRoute = require("./routes/notificationRoute.js")
-const { startCronJobs } = require("./services/cron.service.js")
 const dashboardRoute = require("./routes/dashboardRoute.js")
 const deliveryRoute = require("./routes/deliveryRoute.js")
 const passport = require("passport")
-const { initWorkers } = require("./services/queue.worker.js")
-
-// Initialize Background Workers
-initWorkers()
 
 require("./config/passport")
 
+// Detect Vercel serverless environment
+const isVercel = !!process.env.VERCEL
+
+// Initialize Background Workers (only in non-serverless)
+if (!isVercel) {
+  try {
+    const { initWorkers } = require("./services/queue.worker.js")
+    initWorkers()
+  } catch (err) {
+    console.warn("Workers could not be initialized:", err.message)
+  }
+}
+
 const app = express()
-const server = http.createServer(app)
 
-// Initialize Socket.io from service
-const { initSocket } = require("./services/socket.service.js")
-const io = initSocket(server)
+// ─── Socket.io (only in non-serverless) ───────────────────────────────────────
+let io = null
 
-// Inject io into req object
+if (!isVercel) {
+  const http = require("http")
+  const { initSocket } = require("./services/socket.service.js")
+  const server = http.createServer(app)
+  io = initSocket(server)
+
+  // Start cron jobs
+  try {
+    const { startCronJobs } = require("./services/cron.service.js")
+    startCronJobs()
+  } catch (err) {
+    console.warn("Cron jobs could not be started:", err.message)
+  }
+
+  const PORT = process.env.PORT || 8000
+  server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`)
+  })
+}
+
+// ─── Inject io into req ────────────────────────────────────────────────────────
 app.use((req, res, next) => {
-  req.io = io
+  req.io = io // null on Vercel serverless, actual io locally
   next()
 })
 
-const PORT = process.env.PORT || 8000
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
-app.get("/", (req, res) => {
-  res.send("yeahhhh......")
-})
-
-// data base
+// ─── Database ─────────────────────────────────────────────────────────────────
 connectDB()
-// middlewares
-app.use(express.json({ limit: "10mb" })) // parse JSON body with increased limit for images
+
+// ─── Core Middlewares ──────────────────────────────────────────────────────────
+app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ limit: "10mb", extended: true }))
-app.use(cookieParser()) // parse cookies
+app.use(cookieParser())
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowedOrigins = ["http://localhost:5173", process.env.CLIENT_URL]
+      const allowedOrigins = [
+        "http://localhost:5173",
+        process.env.CLIENT_URL,
+      ]
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true)
       } else {
@@ -72,7 +93,8 @@ app.use(
     credentials: true,
   }),
 )
-// Global Rate Limiter (Prevent DDoS and Brute Force)
+
+// ─── Rate Limiter ──────────────────────────────────────────────────────────────
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 500,
@@ -86,9 +108,12 @@ const limiter = rateLimit({
 app.use("/api", limiter)
 app.use(passport.initialize())
 
-// cron job
-startCronJobs()
-//routes
+// ─── Health Check ──────────────────────────────────────────────────────────────
+app.get("/", (req, res) => {
+  res.send("Crochella Backend is running ✅")
+})
+
+// ─── Routes ───────────────────────────────────────────────────────────────────
 app.use("/api/auth", authRoute)
 app.use("/api/user", userRoute)
 app.use("/api/upload", uploadRoute)
@@ -104,6 +129,9 @@ app.use("/api/notifications", notificationRoute)
 app.use("/api/dashboard", dashboardRoute)
 app.use("/api/delivery", deliveryRoute)
 
-// Global Error Handler Middleware
+// ─── Global Error Handler ──────────────────────────────────────────────────────
 const { errorHandler } = require("./middleware/error.handling.middleware.js")
 app.use(errorHandler)
+
+// ─── Export for Vercel Serverless ──────────────────────────────────────────────
+module.exports = app
