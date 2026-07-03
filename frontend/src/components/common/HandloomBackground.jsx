@@ -3,8 +3,8 @@ import * as THREE from "three"
 import { useRef, useMemo } from "react"
 
 const parameters = {
-  count: 40000,
-  size: 0.04,
+  count: 30000,
+  size: 0.05,
   radius: 12,
   branches: 4,
   spin: 1,

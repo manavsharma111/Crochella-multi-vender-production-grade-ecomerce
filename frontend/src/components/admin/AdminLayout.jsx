@@ -30,7 +30,7 @@ const AdminLayout = () => {
         <AdminTopbar setIsSidebarOpen={setIsSidebarOpen} />
 
         {/* Main Content Area */}
-        <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto mt-20 lg:mt-0">
+        <main className="flex-1 lg:ml-64 p-4 md:p-8 overflow-y-auto mt-20">
           <Outlet />
         </main>
       </div>

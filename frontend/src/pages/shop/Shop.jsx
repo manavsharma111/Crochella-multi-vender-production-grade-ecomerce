@@ -16,11 +16,7 @@ import SortDropdown from "../../components/common/shopComponents/SortDropdown"
 import FilterSidebar from "../../components/common/shopComponents/FilterSidebar"
 import { CardSkeleton } from "../../components/common/Skeleton"
 import Reveal from "../../components/common/animation/Reveal"
-import { gsap } from "gsap"
-import { Flip } from "gsap/Flip"
 import HandloomBackground from "../../components/common/HandloomBackground"
-
-gsap.registerPlugin(Flip)
 
 // Removed dummy products as we are using live database data
 const Shop = () => {
@@ -47,22 +43,7 @@ const Shop = () => {
 
   const changeLayout = (mode) => {
     if (mode === viewMode) return
-
-    // Get current state of cards before layout change
-    const state = Flip.getState(".product-card-container")
-
-    // Change state which triggers React render
     setViewMode(mode)
-
-    // Animate from previous state to new state using GSAP Flip
-    requestAnimationFrame(() => {
-      Flip.from(state, {
-        duration: 0.5,
-        absolute: true,
-        stagger: 0.05,
-        ease: "power2.inOut",
-      })
-    })
   }
 
   // Scroll to top visibility toggle
@@ -245,10 +226,10 @@ const Shop = () => {
                     {displayProducts.slice(0, visibleCount).map((product) => (
                       <motion.div
                         layout
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.5 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.25, layout: { duration: 0.3, ease: "easeInOut" } }}
                         key={product._id}
                         className="product-card-container"
                       >

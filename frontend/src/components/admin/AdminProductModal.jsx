@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { X, Upload, Plus, Trash2 } from "lucide-react"
 import { useDispatch } from "react-redux"
 import {
@@ -12,24 +12,34 @@ const AdminProductModal = ({ isOpen, onClose, product = null }) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
-    productName: product?.productName || "",
-    description: product?.description || "",
-    price: product?.price || "",
-    discountPrice: product?.discountPrice || "",
-    stock: product?.stock || "",
-    category: product?.category || "Sarees",
-    material: product?.material || "",
-    weaveType: product?.weaveType || "",
+    productName: "",
+    description: "",
+    price: "",
+    discountPrice: "",
+    stock: "",
+    category: "Sarees",
+    material: "",
+    weaveType: "",
   })
 
-  const [mediaFiles, setMediaFiles] = useState([
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-  ])
+  const [mediaFiles, setMediaFiles] = useState([null, null, null, null, null, null])
+
+  // Reset form when modal opens or product changes
+  useEffect(() => {
+    if (isOpen) {
+      setFormData({
+        productName: product?.productName || "",
+        description: product?.description || "",
+        price: product?.price || "",
+        discountPrice: product?.discountPrice || "",
+        stock: product?.stock || "",
+        category: product?.category || "Sarees",
+        material: product?.material || "",
+        weaveType: product?.weaveType || "",
+      })
+      setMediaFiles([null, null, null, null, null, null])
+    }
+  }, [isOpen, product])
 
   if (!isOpen) return null
 

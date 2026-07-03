@@ -134,7 +134,15 @@ const App = () => {
         </AnimatePresence>
 
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
+          <Routes
+            location={location}
+            key={
+              location.pathname.startsWith("/admin") ||
+              location.pathname.startsWith("/delivery")
+                ? "layout-shell"
+                : location.pathname
+            }
+          >
             {/* User routes */}
             <Route
               path="/"

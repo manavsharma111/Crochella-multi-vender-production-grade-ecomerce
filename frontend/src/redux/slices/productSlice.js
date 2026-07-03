@@ -16,10 +16,10 @@ export const createProductAsync = createAsyncThunk(
   async (productData, { rejectWithValue }) => {
     try {
       const response = await createProduct(productData)
-      return response.data
+      return response.data  // response is already response.data from service, .data is the product
     } catch (e) {
       console.log(e)
-      return rejectWithValue(e.response?.data?.message || "failed")
+      return rejectWithValue(e.response?.data?.message || "Failed to create product")
     }
   },
 )
@@ -67,10 +67,10 @@ export const updateProductAsync = createAsyncThunk(
   async ({ id, productData }, { rejectWithValue }) => {
     try {
       const response = await updateProduct(id, productData)
-      return response.data
+      return response.data  // response is already response.data from service, .data is the product
     } catch (e) {
       console.log(e)
-      return rejectWithValue(e.response?.data?.message || "failed")
+      return rejectWithValue(e.response?.data?.message || "Failed to update product")
     }
   },
 )
@@ -173,7 +173,13 @@ const productSlice = createSlice({
       })
       .addCase(createProductAsync.fulfilled, (state, action) => {
         state.isLoading = false
-        state.products.push(action.payload)
+        // action.payload is the product object from response.data
+        if (action.payload) {
+          const products = Array.isArray(state.products)
+            ? state.products
+            : state.products?.data || []
+          state.products = [action.payload, ...products]
+        }
       })
       .addCase(createProductAsync.rejected, (state, action) => {
         state.isLoading = false

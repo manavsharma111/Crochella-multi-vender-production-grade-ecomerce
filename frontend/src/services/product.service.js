@@ -4,7 +4,9 @@ import axiosInstance from "../utils/axiosInstance"
 
 // create products
 const createProduct = async (productData) => {
-  const response = await axiosInstance.post(`/products`, productData)
+  const response = await axiosInstance.post(`/products`, productData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
   return response.data
 }
 
@@ -49,7 +51,9 @@ const getProduct = async (id) => {
 
 // update product
 const updateProduct = async (id, productData) => {
-  const response = await axiosInstance.put(`/products/${id}`, productData)
+  const response = await axiosInstance.put(`/products/${id}`, productData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  })
   return response.data
 }
 
