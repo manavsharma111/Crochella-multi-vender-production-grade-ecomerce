@@ -85,7 +85,7 @@ const Checkout = () => {
     ? {
         name: user?.name || "User",
         email: user?.email || "",
-        phone: user?.phone || "",
+        phone: selectedAddress.phone || user?.phone || "",
         address: selectedAddress.Area,
         city: selectedAddress.city,
         state: selectedAddress.state,
