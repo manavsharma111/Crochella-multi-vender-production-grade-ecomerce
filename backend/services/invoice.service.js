@@ -39,13 +39,13 @@ const generateInvoice = (order, res) => {
     .fillColor("#444444")
     .text(order.userId.name || "Customer", 50, 150)
     .text(order.userId.email || "", 50, 165)
-    .text(order.shippingAddress.addressLine1, 50, 180)
+    .text(order.shippingAddress.address || "", 50, 180)
     .text(
-      `${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.pincode}`,
+      `${order.shippingAddress.city || ""}, ${order.shippingAddress.state || ""} ${order.shippingAddress.zip || ""}`,
       50,
       195,
     )
-    .text(`Phone: ${order.shippingAddress.phone}`, 50, 210)
+    .text(`Phone: ${order.shippingAddress.phone || ""}`, 50, 210)
     .moveDown()
 
   // Payment Information
