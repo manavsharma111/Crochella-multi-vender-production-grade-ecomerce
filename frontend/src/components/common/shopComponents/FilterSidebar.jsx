@@ -29,7 +29,7 @@ const FilterSidebar = ({
 
   const renderSidebarContent = (isMobile) => (
     <div
-      className={`bg-[#050505] flex flex-col ${isMobile ? "h-full border-r border-white/5 p-6 overflow-y-auto" : "border border-white/5 p-6 rounded-xl"}`}
+      className={`bg-[#050505] flex flex-col ${isMobile ? "h-full border-r border-white/5 p-6 pb-28 overflow-y-auto" : "border border-white/5 p-6 rounded-xl"}`}
     >
       <div className="flex items-center justify-between mb-6 shrink-0">
         <h3 className="text-[#FFFDD0] font-serif text-lg uppercase tracking-widest flex items-center gap-2">
