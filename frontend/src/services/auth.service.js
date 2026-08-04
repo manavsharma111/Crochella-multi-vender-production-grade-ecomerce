@@ -42,6 +42,7 @@ const resetPassword = async (email, password) => {
 const register = async (
   name,
   email,
+  phone,
   password,
   confirmPassword,
   userOtp,
@@ -50,6 +51,7 @@ const register = async (
   const response = await axiosInstance.post(`/auth/signup`, {
     name,
     email,
+    phone,
     password,
     confirmPassword,
     userOtp,

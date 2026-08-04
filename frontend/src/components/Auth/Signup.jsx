@@ -8,6 +8,7 @@ import { Eye, EyeOff, EyeClosed } from "lucide-react"
 const Signup = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -55,7 +56,7 @@ const Signup = () => {
     }
 
     dispatch(
-      registerUser({ name, email, password, confirmPassword, userOtp, role }),
+      registerUser({ name, email, phone, password, confirmPassword, userOtp, role }),
     ).then((action) => {
       if (action.meta.requestStatus === "fulfilled") {
         toast.success("Registration successful!")
@@ -125,8 +126,8 @@ const Signup = () => {
       )}
 
       <form onSubmit={handleSignup} className="flex flex-col gap-3">
-        {/*  Name + Email */}
-        <div className="grid grid-cols-2 gap-3">
+        {/*  Name + Email + Phone */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
             <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
               Full Name
@@ -150,6 +151,19 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all"
               placeholder="you@email.com"
+              required
+            />
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 ml-1">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-[#ff007f] focus:bg-white/10 transition-all"
+              placeholder="+91 9876543210"
               required
             />
           </div>

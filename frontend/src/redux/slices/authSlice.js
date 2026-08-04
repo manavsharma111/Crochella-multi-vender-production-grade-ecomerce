@@ -38,13 +38,14 @@ export const loginUser = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   "user/register",
   async (
-    { name, email, password, confirmPassword, userOtp, role },
+    { name, email, phone, password, confirmPassword, userOtp, role },
     { rejectWithValue },
   ) => {
     try {
       const response = await authService.register(
         name,
         email,
+        phone,
         password,
         confirmPassword,
         userOtp,
