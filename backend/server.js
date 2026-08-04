@@ -71,7 +71,16 @@ app.use((req, res, next) => {
 })
 
 // ─── Database ─────────────────────────────────────────────────────────────────
-connectDB()
+// On Vercel, await the DB connection before handling requests to prevent cold-start crashes
+app.use(async (req, res, next) => {
+  try {
+    await connectDB()
+    next()
+  } catch (error) {
+    console.error("Database connection failed:", error)
+    res.status(500).json({ success: false, message: "Database connection error" })
+  }
+})
 
 // ─── Core Middlewares ──────────────────────────────────────────────────────────
 app.use(express.json({ limit: "10mb" }))
