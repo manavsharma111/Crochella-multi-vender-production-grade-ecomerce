@@ -29,6 +29,7 @@ const FilterSidebar = ({
 
   const renderSidebarContent = (isMobile) => (
     <div
+      data-lenis-prevent="true"
       className={`bg-[#050505] flex flex-col ${isMobile ? "h-full border-r border-white/5 p-6 pb-28 overflow-y-auto" : "border border-white/5 p-6 rounded-xl"}`}
     >
       <div className="flex items-center justify-between mb-6 shrink-0">
