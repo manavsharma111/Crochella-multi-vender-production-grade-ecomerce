@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { motion } from "framer-motion"
-import { MapPin, Plus, Building, Map, Hash, Globe } from "lucide-react"
+import { MapPin, Plus, Building, Map, Hash, Globe, Phone } from "lucide-react"
 import { toast } from "react-hot-toast"
 import BrutalistButton from "../../components/common/Buttons/BrutalistButton"
 import NeoInput from "../../components/common/Inputs/NeoInput"
@@ -25,6 +25,7 @@ const AddressesTab = () => {
     state: "",
     zip: "",
     country: "",
+    phone: "",
   })
 
   useEffect(() => {
@@ -33,8 +34,8 @@ const AddressesTab = () => {
 
   const handleAddAddress = (e) => {
     e.preventDefault()
-    const { street, city, state, zip, country } = addressForm
-    if (!street || !city || !state || !zip || !country) {
+    const { street, city, state, zip, country, phone } = addressForm
+    if (!street || !city || !state || !zip || !country || !phone) {
       toast.error("Please fill all address fields")
       return
     }
@@ -70,6 +71,7 @@ const AddressesTab = () => {
       state: state,
       country: country,
       pinCode: zip,
+      phone: phone,
     }
 
     if (editingAddressId) {
@@ -101,7 +103,7 @@ const AddressesTab = () => {
   }
 
   const resetAddressForm = () => {
-    setAddressForm({ street: "", city: "", state: "", zip: "", country: "" })
+    setAddressForm({ street: "", city: "", state: "", zip: "", country: "", phone: "" })
     setIsAddingAddress(false)
     setEditingAddressId(null)
     dispatch(getDeliveryAddressAsync())
@@ -115,6 +117,7 @@ const AddressesTab = () => {
       state: address.state || "",
       zip: address.pinCode || "",
       country: address.country || "",
+      phone: address.phone || "",
     })
     setIsAddingAddress(true)
   }
@@ -235,6 +238,18 @@ const AddressesTab = () => {
                 required
               />
             </div>
+            
+            <NeoInput
+              label="Contact Number"
+              icon={Phone}
+              type="tel"
+              value={addressForm.phone}
+              onChange={(e) =>
+                setAddressForm({ ...addressForm, phone: e.target.value })
+              }
+              placeholder="+91 9876543210"
+              required
+            />
           </div>
 
           <div className="flex gap-3 justify-end mt-8">
