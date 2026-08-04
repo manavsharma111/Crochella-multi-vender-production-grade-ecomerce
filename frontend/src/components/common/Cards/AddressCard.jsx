@@ -13,6 +13,11 @@ const AddressCard = ({ address, onEdit, onDelete, className = "" }) => {
         <p className="text-gray-300 text-sm leading-relaxed max-w-md">
           {address.Area}, {address.city}, {address.state} - {address.pinCode},{" "}
           {address.country}
+          {address.phone && (
+            <span className="block mt-1 text-[#ff007f] font-medium text-xs">
+              📞 {address.phone}
+            </span>
+          )}
         </p>
       </div>
       <div className="flex items-center shrink-0">
