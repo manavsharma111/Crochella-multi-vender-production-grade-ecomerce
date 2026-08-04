@@ -30,6 +30,8 @@ const FilterSidebar = ({
   const renderSidebarContent = (isMobile) => (
     <div
       data-lenis-prevent="true"
+      onWheel={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
       className={`bg-[#050505] flex flex-col ${isMobile ? "h-full border-r border-white/5 p-6 pb-28 overflow-y-auto" : "border border-white/5 p-6 rounded-xl"}`}
     >
       <div className="flex items-center justify-between mb-6 shrink-0">
@@ -174,7 +176,7 @@ const FilterSidebar = ({
       {/* Mobile Drawer Overlay */}
       <AnimatePresence>
         {isMobileOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden flex">
+          <div className="fixed inset-0 z-[999] lg:hidden flex">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
