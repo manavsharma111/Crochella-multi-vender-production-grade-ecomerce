@@ -99,7 +99,7 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 500,
   message: "Too many requests from this IP, please try again after 15 minutes",
-  ...(process.env.REDIS_URI && {
+  ...(process.env.REDIS_URI && !isVercel && {
     store: new RedisStore({
       sendCommand: (...args) => redisClient.sendCommand(args),
     }),
