@@ -8,7 +8,7 @@ const redisClient = require("../config/redis")
 // registration
 const signUpUser = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, userOtp, role } = req.body
+    const { name, email, password, confirmPassword, userOtp, role, phone } = req.body
 
     // sirf buyer and deilvery boy hii apna role decide kre admin locally bana hai
     const allowedRoles = ["buyer", "delivery_boy"]
@@ -57,6 +57,7 @@ const signUpUser = async (req, res) => {
     await User.create({
       name,
       email,
+      phone,
       password: hashedPassword,
       role: assignedRole,
     })
