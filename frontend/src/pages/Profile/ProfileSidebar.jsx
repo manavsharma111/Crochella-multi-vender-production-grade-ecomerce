@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { User, Lock, MapPin, Edit3, Bell, Package } from "lucide-react"
 import { toast } from "react-hot-toast"
@@ -19,6 +19,12 @@ const ProfileSidebar = ({ activeTab, setActiveTab }) => {
   const dispatch = useDispatch()
   const { profile } = useSelector((state) => state.user)
   const fileInputRef = useRef(null)
+
+  useEffect(() => {
+    if (!profile) {
+      dispatch(getProfileAsync())
+    }
+  }, [dispatch, profile])
 
   const handleProfileImageChange = (e) => {
     const file = e.target.files[0]
