@@ -101,6 +101,9 @@ const userSchema = new mongoose.Schema({
       pinCode: {
         type: String,
       },
+      phone: {
+        type: String,
+      },
     },
   ],
   deliveryRating: {
