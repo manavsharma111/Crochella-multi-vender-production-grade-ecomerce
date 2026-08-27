@@ -18,7 +18,7 @@ import Profile from "./pages/Profile/Profile"
 import Home from "./pages/LandingPage/Home"
 import ThreeVerticalStripsReveal from "./pages/LandingPage/ThreeVerticalStripsReveal"
 import SmoothScroll from "./components/common/animation/SmoothScroll"
-import Cursor from "./components/common/animation/Cursor"
+import CustomCursor from "./components/common/animation/CustomCursor"
 import FloatingChatbot from "./components/common/FloatingChatbot"
 import NotFound from "./pages/NotFound"
 
@@ -92,7 +92,7 @@ const App = () => {
   return (
     <SmoothScroll>
       <div className="min-h-screen font-sans overflow-x-hidden relative">
-        <Cursor />
+        <CustomCursor />
         <Toaster />
         <AnimatePresence>
           {loading && (

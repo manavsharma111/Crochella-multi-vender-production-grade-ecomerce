@@ -173,8 +173,8 @@ const Shop = () => {
                 />
               </div>
 
-              {/* View Toggles - Hidden on very small screens, visible on md+ */}
-              <div className="hidden sm:flex bg-[#0a0a0a] border border-white/5 rounded-md md:rounded-lg overflow-hidden shrink-0 ml-auto md:ml-0">
+              {/* View Toggles */}
+              <div className="flex bg-[#0a0a0a] border border-white/5 rounded-md md:rounded-lg overflow-hidden shrink-0 ml-auto md:ml-0">
                 <button
                   onClick={() => changeLayout("list")}
                   className={`p-1.5 md:p-2 transition-colors border-r border-white/5 ${viewMode === "list" ? "text-[#FFFDD0] bg-white/5" : "text-gray-500 hover:text-white"}`}

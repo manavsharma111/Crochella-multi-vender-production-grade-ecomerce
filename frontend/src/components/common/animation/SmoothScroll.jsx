@@ -17,9 +17,9 @@ const SmoothScroll = ({ children }) => {
       lerp: 0.05, // Lower value = more buttery/smooth, higher = more responsive (default is 0.1)
       wheelMultiplier: 1,
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       touchMultiplier: 1.5, // Thoda kam kiya taaki touch par ekdam se na bhaage
-      smoothTouch: true,
+      smoothTouch: false,
       
     })
 

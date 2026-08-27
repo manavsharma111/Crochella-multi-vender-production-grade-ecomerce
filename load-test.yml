@@ -1,0 +1,9 @@
+config:
+  target: "http://localhost:5000" # Crochella ka default port 5000 hai
+  phases:
+    - duration: 20
+      arrivalRate: 50
+scenarios:
+  - flow:
+      - get:
+          url: "/" # Dummy load hit karne ke liye
