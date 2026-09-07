@@ -7,7 +7,7 @@ export const checkoutAsync = createAsyncThunk(
   async (orderData, { rejectWithValue }) => {
     try {
       const response = await checkout(orderData)
-      return response.data
+      return response
     } catch (e) {
       return rejectWithValue(e.response?.data?.message || "Checkout failed")
     }
@@ -20,7 +20,7 @@ export const verifyPaymentAsync = createAsyncThunk(
   async (paymentData, { rejectWithValue }) => {
     try {
       const response = await verifyPayment(paymentData)
-      return response.data
+      return response
     } catch (e) {
       return rejectWithValue(
         e.response?.data?.message || "Payment verification failed",
