@@ -34,3 +34,23 @@ a {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 0, 127, 0.6);
 }
+
+/* Fix Leaflet Zoom Controls inheriting global anchor styles */
+.leaflet-control-zoom a {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #111 !important;
+  color: #ff007f !important;
+  border: 1px solid #333 !important;
+  transition: none !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #ff007f !important;
+  color: white !important;
+  width: 30px !important;
+}

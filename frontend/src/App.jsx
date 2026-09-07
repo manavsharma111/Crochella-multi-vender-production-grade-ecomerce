@@ -1,18 +1,11 @@
 import React, { useState, useEffect, Suspense, lazy } from "react"
 import { AnimatePresence, motion } from "framer-motion"
-import {
-  useLocation,
-  useNavigate,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom"
+import { useLocation, useNavigate, Routes, Route, Navigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { checkAuth } from "./redux/slices/authSlice"
 import { Toaster, toast } from "react-hot-toast"
-import HandloomBackground from "./components/common/HandloomBackground"
-
 import Navbar from "./components/Navbar/Navbar.jsx"
+import HandloomBackground from "./components/common/HandloomBackground"
 import PremiumPreloader from "./components/common/PremiumPreloader"
 import Profile from "./pages/Profile/Profile"
 import Home from "./pages/LandingPage/Home"
@@ -21,46 +14,32 @@ import SmoothScroll from "./components/common/animation/SmoothScroll"
 import CustomCursor from "./components/common/animation/CustomCursor"
 import FloatingChatbot from "./components/common/FloatingChatbot"
 import NotFound from "./pages/NotFound"
+import PageTransition from "./components/common/animation/PageTransition"
 
-// Lazy-loaded routes for performance
+// Lazy-loaded routes 
 const Shop = lazy(() => import("./pages/shop/Shop"))
-const ProductDescriptionPage = lazy(
-  () => import("./pages/shop/ProductDescriptionPage"),
-)
+const ProductDescriptionPage = lazy(() => import("./pages/shop/ProductDescriptionPage"))
 const Cart = lazy(() => import("./pages/Cart/Cart"))
 const Checkout = lazy(() => import("./pages/Checkout/Checkout"))
 const OrderSuccess = lazy(() => import("./pages/Checkout/OrderSuccess"))
-const PaymentSuccess = lazy(
-  () => import("./pages/PaymentGateWay/PaymentSuccess"),
-)
+const PaymentSuccess = lazy(() => import("./pages/PaymentGateWay/PaymentSuccess"))
 const Wishlist = lazy(() => import("./pages/Wishlist/Wishlist"))
-const CustomWishlistDetails = lazy(
-  () => import("./pages/Wishlist/CustomWishlistDetails"),
-)
+const CustomWishlistDetails = lazy(() => import("./pages/Wishlist/CustomWishlistDetails"))
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout"))
 const AdminDashboard = lazy(() => import("./pages/Admin/AdminDashboard"))
 const AdminProducts = lazy(() => import("./pages/Admin/AdminProducts"))
 const AdminOrders = lazy(() => import("./pages/Admin/AdminOrders"))
 const AdminUsers = lazy(() => import("./pages/Admin/AdminUsers"))
-const AdminDeliveryStaff = lazy(
-  () => import("./pages/Admin/AdminDeliveryStaff"),
-)
+const AdminDeliveryStaff = lazy(() => import("./pages/Admin/AdminDeliveryStaff"))
 const AdminCoupons = lazy(() => import("./pages/Admin/AdminCoupons"))
 const AdminReviews = lazy(() => import("./pages/Admin/AdminReviews"))
-const DeliveryLayout = lazy(
-  () => import("./components/delivery/DeliveryLayout"),
-)
-const DeliveryDashboard = lazy(
-  () => import("./pages/Delivery/DeliveryDashboard"),
-)
+const DeliveryLayout = lazy(() => import("./components/delivery/DeliveryLayout"))
+const DeliveryDashboard = lazy(() => import("./pages/Delivery/DeliveryDashboard"))
 const DeliveryOrders = lazy(() => import("./pages/Delivery/DeliveryOrders"))
 const DeliveryReturns = lazy(() => import("./pages/Delivery/DeliveryReturns"))
 const MyDeliveries = lazy(() => import("./pages/Delivery/MyDeliveries"))
-const UserDelivery = lazy(
-  () => import("./pages/UserDeliveryPannel/UserDelivery"),
-)
+const UserDelivery = lazy(() => import("./pages/UserDeliveryPannel/UserDelivery"))
 
-import PageTransition from "./components/common/animation/PageTransition"
 
 const App = () => {
   const [loading, setLoading] = useState(true)
