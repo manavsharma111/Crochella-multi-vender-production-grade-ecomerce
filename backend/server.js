@@ -92,6 +92,8 @@ app.use(
       const allowedOrigins = [
         "http://localhost:5173",
         process.env.CLIENT_URL,
+        "https://checkout.razorpay.com",
+        "https://api.razorpay.com",
       ]
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true)
