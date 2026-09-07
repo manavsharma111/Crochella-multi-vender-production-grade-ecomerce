@@ -1,9 +1,9 @@
 config:
-  target: "http://localhost:5000" # Crochella ka default port 5000 hai
+  target: "https://crochella-multi-vender-production-g.vercel.app/api"
   phases:
     - duration: 20
-      arrivalRate: 50
+      arrivalRate: 20
 scenarios:
   - flow:
       - get:
-          url: "/" # Dummy load hit karne ke liye
+          url: "/products"
