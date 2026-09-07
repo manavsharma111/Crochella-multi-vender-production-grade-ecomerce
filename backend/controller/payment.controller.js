@@ -47,6 +47,10 @@ const checkout = async (req, res) => {
         receipt: `receipt_order_${Date.now()}`,
       }
 
+      console.log("Checking Vercel Env Variables:");
+      console.log("RAZORPAY_KEY_ID exists:", !!process.env.RAZORPAY_KEY_ID);
+      console.log("RAZORPAY_KEY_SECRET exists:", !!process.env.RAZORPAY_KEY_SECRET);
+
       const razorpayOrder = await razorpayInstance.orders.create(options)
 
       if (!razorpayOrder) {
