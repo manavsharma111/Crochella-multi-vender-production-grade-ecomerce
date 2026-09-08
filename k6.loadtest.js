@@ -4,7 +4,7 @@ import { Counter, Rate, Trend, Gauge } from 'k6/metrics'
 
 
 // CONFIG
-const BASE_URL = __ENV.BASE_URL || 'http://localhost:8000'
+const BASE_URL = 'https://crochella-multi-vender-production-g.vercel.app' || 'http://localhost:8000'
 const ENDPOINT = __ENV.ENDPOINT || '/api/products'
 
 const RATE_LIMIT = Number(__ENV.RATE_LIMIT || 100000)
