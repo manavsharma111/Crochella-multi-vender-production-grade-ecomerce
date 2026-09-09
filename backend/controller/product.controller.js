@@ -7,10 +7,14 @@ const redisClient = require("../config/redis")
 const clearProductCache = async () => {
   if (redisClient.isOpen) {
     try {
-      const keys = await redisClient.keys("cache:/api/products*")
-      if (keys.length > 0) {
-        await redisClient.del(keys)
-      }
+      let cursor = '0';
+      do {
+        const [nextCursor, keys] = await redisClient.scan(cursor, 'MATCH', 'cache:/api/products*', 'COUNT', 100);
+        cursor = nextCursor;
+        if (keys.length > 0) {
+          await redisClient.del(keys);
+        }
+      } while (cursor !== '0');
     } catch (error) {
       console.error("Redis cache clearing error:", error)
     }

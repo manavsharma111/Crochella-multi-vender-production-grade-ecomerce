@@ -339,13 +339,25 @@ const getDeliveryStaffStats = async (req, res) => {
       "-password",
     )
 
+    // Fetch all completed orders for all delivery boys in ONE query to prevent N+1
+    const deliveryBoyIds = deliveryBoys.map(db => db._id);
+    const allCompletedOrders = await Order.find({
+      deliveryBoyId: { $in: deliveryBoyIds },
+      deliveryStatus: { $in: ["Delivered", "Return_Collected"] },
+    });
+
+    // Group orders by delivery boy in memory
+    const ordersByDeliveryBoy = {};
+    allCompletedOrders.forEach(order => {
+      const dbId = order.deliveryBoyId.toString();
+      if (!ordersByDeliveryBoy[dbId]) ordersByDeliveryBoy[dbId] = [];
+      ordersByDeliveryBoy[dbId].push(order);
+    });
+
     const stats = await Promise.all(
       deliveryBoys.map(async (dboy) => {
-        // Find completed deliveries and return collections for this delivery boy
-        const completedOrders = await Order.find({
-          deliveryBoyId: dboy._id,
-          deliveryStatus: { $in: ["Delivered", "Return_Collected"] },
-        })
+        // Find completed deliveries and return collections for this delivery boy from memory
+        const completedOrders = ordersByDeliveryBoy[dboy._id.toString()] || [];
 
         const totalDeliveries = completedOrders.length
         let totalDeliveryTimeHours = 0

@@ -1,4 +1,5 @@
 const express = require("express")
+const compression = require("compression")
 const dotenv = require("dotenv")
 dotenv.config()
 const cors = require("cors")
@@ -40,6 +41,7 @@ if (!isVercel) {
 }
 
 const app = express()
+app.use(compression())
 
 // ─── Socket.io (only in non-serverless) ───────────────────────────────────────
 let io = null
