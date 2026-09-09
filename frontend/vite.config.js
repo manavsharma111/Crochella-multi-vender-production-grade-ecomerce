@@ -44,7 +44,6 @@ export default defineConfig({
           if (id.includes("node_modules")) {
             if (id.includes("gsap")) return "vendor-gsap"
             if (id.includes("framer-motion")) return "vendor-framer"
-            return "vendor"
           }
         },
       },

@@ -96,7 +96,8 @@ const CinematicHero = ({ loading }) => {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
+            poster="https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg?auto=compress&cs=tinysrgb&w=1920&q=50"
             className="w-full h-full object-cover opacity-0 scale-125 transform-gpu will-change-transform"
             src={heroVideo}
           />
