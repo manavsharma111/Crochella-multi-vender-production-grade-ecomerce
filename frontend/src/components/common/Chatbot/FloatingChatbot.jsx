@@ -86,6 +86,7 @@ const FloatingChatbot = () => {
               <button
                 onClick={() => setIsOpen(false)}
                 className="hover:bg-black/20 p-1.5 rounded-full transition-colors relative z-10"
+                aria-label="Close Chatbot"
               >
                 <X size={18} />
               </button>
@@ -146,6 +147,7 @@ const FloatingChatbot = () => {
                   type="submit"
                   disabled={!input.trim() || loading}
                   className="bg-[#ff007f] text-white w-10 h-10 rounded-xl flex items-center justify-center hover:bg-[#d00068] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+                  aria-label="Send Message"
                 >
                   <Send
                     size={16}
@@ -163,6 +165,7 @@ const FloatingChatbot = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-14 h-14 bg-[#ff007f] hover:bg-[#d00068] text-white rounded-full shadow-[0_0_20px_rgba(255,0,127,0.3)] flex items-center justify-center transition-transform hover:scale-110 active:scale-95 z-50 relative"
+        aria-label="Toggle Chatbot"
       >
         <AnimatePresence mode="wait">
           <motion.div

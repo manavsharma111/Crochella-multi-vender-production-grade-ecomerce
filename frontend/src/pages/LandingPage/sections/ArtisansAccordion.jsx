@@ -32,13 +32,13 @@ const ArtisansAccordion = () => {
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16">
         {/* Title Section */}
         <div className="w-full lg:w-1/3">
-          <h2 className="text-sm tracking-[0.3em] uppercase opacity-50 mb-6 text-[#ff007f]">
+          <h2 className="text-sm tracking-[0.3em] uppercase opacity-90 mb-6 text-[#ff007f]">
             The Hands Behind The Loom
           </h2>
           <h1 className="text-5xl md:text-7xl font-serif font-black tracking-tighter mb-8 leading-tight">
             MASTER ARTISANS
           </h1>
-          <p className="opacity-70 text-lg leading-relaxed max-w-sm">
+          <p className="opacity-90 text-lg leading-relaxed max-w-sm">
             Our fabrics are not born in factories. They are born in the homes of
             masters who have inherited their craft through centuries of oral
             tradition. Meet the souls of Crochella.
@@ -85,7 +85,7 @@ const ArtisansAccordion = () => {
                   >
                     <div>
                       <h3
-                        className={`font-serif tracking-tighter transition-all duration-500 ${isActive ? "text-4xl md:text-6xl text-[#ff007f]" : "text-2xl md:text-4xl opacity-50"}`}
+                        className={`font-serif tracking-tighter transition-all duration-500 ${isActive ? "text-4xl md:text-6xl text-[#ff007f]" : "text-2xl md:text-4xl opacity-90"}`}
                       >
                         {artisan.name}
                       </h3>
