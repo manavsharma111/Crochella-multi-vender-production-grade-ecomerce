@@ -11,7 +11,7 @@ const cards = [
     title: "THE IVORY WEAVE",
     subtitle: "Spring / Summer Collection",
     desc: "A delicate interplay of light and texture, handcrafted using centuries-old techniques.",
-    img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+    img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800",
     bgColor: "#FAF9F6", // Cream
     textColor: "#1A1A1A",
   },
@@ -20,7 +20,7 @@ const cards = [
     title: "BLUSH SILK",
     subtitle: "Evening Edit",
     desc: "Soft pink tones woven into pure raw silk, designed to move like liquid.",
-    img: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg",
+    img: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg?auto=compress&cs=tinysrgb&w=800",
     bgColor: "#FDF5F6", // Soft Pink
     textColor: "#2B1A20",
   },
@@ -29,7 +29,7 @@ const cards = [
     title: "RAW BEIGE",
     subtitle: "The Signature Series",
     desc: "Unbleached, undyed natural fibers celebrating the earth's raw beauty.",
-    img: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg",
+    img: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg?auto=compress&cs=tinysrgb&w=800",
     bgColor: "#F5F5DC", // Beige
     textColor: "#3A352F",
   },
@@ -38,7 +38,7 @@ const cards = [
     title: "MIDNIGHT CHARCOAL",
     subtitle: "Avant-Garde",
     desc: "Deep, moody hues contrasting with luminous silver threads.",
-    img: "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg",
+    img: "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg?auto=compress&cs=tinysrgb&w=800",
     bgColor: "#EAE6DF", // Ivory/Grayish
     textColor: "#111111",
   },

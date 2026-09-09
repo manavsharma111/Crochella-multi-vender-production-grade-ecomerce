@@ -4,17 +4,17 @@ const collections = [
   {
     id: 1,
     name: "THE HERITAGE",
-    bg: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg",
+    bg: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: 2,
     name: "RAW SILK",
-    bg: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+    bg: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: 3,
     name: "ARTISANAL",
-    bg: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg",
+    bg: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ]
 

@@ -9,25 +9,25 @@ const timelineEvents = [
     year: "3000 BCE",
     title: "Indus Valley Origins",
     desc: "The earliest evidence of woven cotton textiles was discovered in the Indus Valley Civilization, marking the birth of a 5,000-year-old legacy.",
-    img: "https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg",
+    img: "https://images.pexels.com/photos/3738088/pexels-photo-3738088.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     year: "16th Century",
     title: "The Mughal Golden Age",
     desc: "Under Mughal patronage, Indian weavers perfected the art of Jamdani and intricate silk brocades, creating fabrics as light as woven air.",
-    img: "https://images.pexels.com/photos/5431057/pexels-photo-5431057.jpeg",
+    img: "https://images.pexels.com/photos/5431057/pexels-photo-5431057.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     year: "1905",
     title: "The Swadeshi Movement",
     desc: "The spinning wheel became a symbol of revolution. Hand-spun Khadi cloth empowered a nation to reclaim its identity and heritage.",
-    img: "https://images.pexels.com/photos/5086055/pexels-photo-5086055.jpeg",
+    img: "https://images.pexels.com/photos/5086055/pexels-photo-5086055.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     year: "Present Day",
     title: "Modern Luxury & Crochella",
     desc: "Today, we elevate this ancient artistry. Preserving the soulful imperfections of handloom while redefining it for modern global luxury.",
-    img: "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg",
+    img: "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ]
 

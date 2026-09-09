@@ -8,17 +8,17 @@ const collections = [
   {
     id: 1,
     title: "The Royal Weave",
-    img: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg",
+    img: "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: 2,
     title: "Midnight Silk",
-    img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+    img: "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: 3,
     title: "Golden Heritage",
-    img: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg",
+    img: "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ]
 

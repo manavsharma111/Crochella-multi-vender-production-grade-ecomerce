@@ -6,21 +6,21 @@ const artisans = [
     name: "MOHAMMED ANSARI",
     role: "Master Weaver, Varanasi",
     desc: "A fifth-generation artisan whose hands have woven silk for royalty. Mohammed specializes in the delicate art of Kadwa brocade, where every motif is woven separately by hand, taking months to complete a single piece.",
-    img: "https://images.pexels.com/photos/837265/pexels-photo-837265.jpeg", // Placeholder portrait
+    img: "https://images.pexels.com/photos/837265/pexels-photo-837265.jpeg?auto=compress&cs=tinysrgb&w=800", // Placeholder portrait
   },
   {
     id: 2,
     name: "LAKSHMI DEVI",
     role: "Dyeing Specialist, Kutch",
     desc: "Lakshmi breathes life into raw threads using ancient natural dyeing techniques. From indigo to madder root, her profound knowledge of earth's alchemy creates the signature vibrant hues of Crochella.",
-    img: "https://images.pexels.com/photos/1105058/pexels-photo-1105058.jpeg",
+    img: "https://images.pexels.com/photos/1105058/pexels-photo-1105058.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     id: 3,
     name: "KABIR DAS",
     role: "Loom Engineer, Bengal",
     desc: "The silent architect behind the weaves. Kabir builds and tunes the traditional wooden handlooms, ensuring the perfect tension for the gossamer-like Jamdani fabrics that float on air.",
-    img: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg",
+    img: "https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ]
 

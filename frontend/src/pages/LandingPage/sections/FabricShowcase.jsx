@@ -37,7 +37,7 @@ const FabricShowcase = () => {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           ref={imageRef}
-          src="https://images.pexels.com/photos/1030946/pexels-photo-1030946.jpeg"
+          src="https://images.pexels.com/photos/1030946/pexels-photo-1030946.jpeg?auto=compress&cs=tinysrgb&w=800"
           alt="Fabric texture"
           className="w-full h-[120%] object-cover opacity-30 grayscale scale-110"
         />

@@ -6,10 +6,10 @@ import weavingVideo from "../../../assets/Weaving Machine Animation and Basic Pr
 gsap.registerPlugin(ScrollTrigger)
 
 const images = [
-  "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg",
-  "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg",
-  "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
-  "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg",
+  "https://images.pexels.com/photos/852860/pexels-photo-852860.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/1018911/pexels-photo-1018911.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800",
+  "https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg?auto=compress&cs=tinysrgb&w=800",
 ]
 
 const VideoScaleTransition = () => {

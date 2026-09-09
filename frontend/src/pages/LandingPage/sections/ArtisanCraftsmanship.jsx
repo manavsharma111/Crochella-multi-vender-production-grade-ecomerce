@@ -61,7 +61,7 @@ const ArtisanCraftsmanship = () => {
         <div className="w-full h-[60vh] md:h-[80vh] overflow-hidden rounded-sm">
           <img
             ref={imageRef}
-            src="https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg"
+            src="https://images.pexels.com/photos/4590215/pexels-photo-4590215.jpeg?auto=compress&cs=tinysrgb&w=800"
             alt="Artisan weaving"
             className="w-full h-full object-cover grayscale opacity-80"
           />

@@ -56,7 +56,7 @@ const FabricMesh = () => {
   const meshRef = useRef()
   const materialRef = useRef()
   const texture = useTexture(
-    "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+    "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800",
   ) // Handloom texture
 
   // Keep track of smoothed mouse coordinates for buttery transitions
