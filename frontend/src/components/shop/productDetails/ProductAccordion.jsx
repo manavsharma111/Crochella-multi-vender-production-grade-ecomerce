@@ -6,23 +6,21 @@ import Hover from "../../common/animation/Hover"
 const AccordionItem = ({ title, children, isOpen, onToggle }) => {
   return (
     <div className="border-b border-gray-800">
-      <Hover fillColor="#ff007f" className="w-full">
-        <button
-          onClick={onToggle}
-          className="w-full flex items-center justify-between py-6 group"
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between py-6 group"
+      >
+        <span
+          className={`text-sm font-black uppercase tracking-widest transition-colors ${isOpen ? "text-slate-400" : "text-white group-hover:text-gray-300"}`}
         >
-          <span
-            className={`text-sm font-black uppercase tracking-widest transition-colors ${isOpen ? "text-slate-400" : "text-white group-hover:text-gray-300"}`}
-          >
-            {title}
-          </span>
-          <span
-            className={`transition-transform duration-300 ${isOpen ? "rotate-180 text-slate-400" : "text-gray-500 group-hover:text-white"}`}
-          >
-            {isOpen ? <Minus size={18} /> : <Plus size={18} />}
-          </span>
-        </button>
-      </Hover>
+          {title}
+        </span>
+        <span
+          className={`transition-transform duration-300 ${isOpen ? "rotate-180 text-slate-400" : "text-gray-500 group-hover:text-white"}`}
+        >
+          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+        </span>
+      </button>
       <AnimatePresence>
         {isOpen && (
           <motion.div

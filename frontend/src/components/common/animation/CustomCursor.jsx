@@ -77,7 +77,7 @@ const CustomCursor = () => {
       height: 32,
       borderRadius: "50%",
       backgroundColor: "rgba(243, 55, 103, 0)",
-      border: "1px solid rgba(243, 55, 103, 1)",
+      border: "1px solid rgba(162, 0, 255, 1)",
     },
     hover: hoverConfig ? {
       x: hoverConfig.x,
@@ -85,8 +85,8 @@ const CustomCursor = () => {
       width: hoverConfig.width,
       height: hoverConfig.height,
       borderRadius: hoverConfig.borderRadius,
-      backgroundColor: "rgba(243, 55, 103, 0.15)",
-      border: "1px solid rgba(243, 55, 103, 0.5)",
+      backgroundColor: "rgba(162, 0, 255, 0.15)",
+      border: "1px solid rgba(162, 0, 255, 0.5)",
     } : {},
   };
 
@@ -122,7 +122,7 @@ const CustomCursor = () => {
         variants={dotVariants}
         animate={hoveredElement ? "hover" : "default"}
         transition={{ type: "tween", ease: "easeOut", duration: 0.15 }}
-        className="fixed top-0 left-0 w-2 h-2 bg-[#f33767] rounded-full pointer-events-none z-[9999] hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 bg-[#a200ff] rounded-full pointer-events-none z-[9999] hidden md:block"
       />
     </>
   );
