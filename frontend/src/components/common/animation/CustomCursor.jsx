@@ -16,7 +16,7 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e) => {
       const target = e.target.closest(
-        'a, button, [role="button"], input, textarea, select, .cursor-pointer'
+        'a, button, [role="button"], .cursor-pointer'
       );
       if (target) {
         setHoveredElement(target);
@@ -25,7 +25,7 @@ const CustomCursor = () => {
 
     const handleMouseOut = (e) => {
       const target = e.target.closest(
-        'a, button, [role="button"], input, textarea, select, .cursor-pointer'
+        'a, button, [role="button"], .cursor-pointer'
       );
       if (target) {
         setHoveredElement(null);
