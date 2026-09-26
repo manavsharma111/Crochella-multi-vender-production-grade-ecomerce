@@ -8,7 +8,7 @@ const AccordionItem = ({ title, children, isOpen, onToggle }) => {
     <div className="border-b border-gray-800">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between py-6 group"
+        className="w-full flex items-center justify-between py-6 px-4 group hover:bg-[#ffffff08] rounded-xl transition-all duration-300 no-cursor-box"
       >
         <span
           className={`text-sm font-black uppercase tracking-widest transition-colors ${isOpen ? "text-slate-400" : "text-white group-hover:text-gray-300"}`}
