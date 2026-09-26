@@ -10,9 +10,10 @@ input:-webkit-autofill:active {
   caret-color: white !important;
 }
 
-button,
-a {
-  cursor: pointer !important;
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
 /* Custom sleek scrollbar for chat and other small components */
