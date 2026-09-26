@@ -44,6 +44,11 @@ export default defineConfig({
           if (id.includes("node_modules")) {
             if (id.includes("gsap")) return "vendor-gsap"
             if (id.includes("framer-motion")) return "vendor-framer"
+            if (id.includes("react") || id.includes("react-dom") || id.includes("react-router")) return "vendor-react"
+            if (id.includes("lucide-react")) return "vendor-icons"
+            if (id.includes("three") || id.includes("@react-three")) return "vendor-3d"
+            if (id.includes("leaflet") || id.includes("react-leaflet")) return "vendor-map"
+            return "vendor" // Catch all other dependencies
           }
         },
       },
