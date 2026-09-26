@@ -87,12 +87,12 @@ const VideoScaleTransition = () => {
       ref={containerRef}
       className="relative w-full h-screen bg-[#050505] flex items-center justify-center overflow-hidden cursor-none"
     >
-      <h2
+      {/* <h2
         ref={textRef}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15vw] font-black text-slate-50/10 whitespace-nowrap pointer-events-none z-0"
       >
         THE VISION
-      </h2>
+      </h2> */}
 
       {/* The 3x3 Grid Layout */}
       <div className="relative z-10 w-full h-full flex items-center justify-center pointer-events-none">
