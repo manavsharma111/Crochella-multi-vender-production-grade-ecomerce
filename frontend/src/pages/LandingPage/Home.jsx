@@ -45,25 +45,28 @@ const Home = ({ loading }) => {
       <CinematicHero loading={loading} />
       <TextRevealPhilosophy />
       <FeaturedCollections />
-      <Suspense fallback={<div className="min-h-[50vh] w-full bg-black flex items-center justify-center text-white/50">Loading sections...</div>}>
-        <BrandStory />
-        <ArtisanCraftsmanship />
-        <HorizontalLookbook />
-        <ColorMorphSection color="#2a0013">
-          <FabricShowcase />
-        </ColorMorphSection>
-        <ProcessTimeline />
-        <VideoScaleTransition />
-        <TextMarqueeSeparator />
-        <StackedFabricCards />
-        <FullscreenCollection />
-        <ArtisansAccordion />
-        <HandloomHistoryTimeline />
-        <InteractiveFabric3D />
-        <TextMaskPhilosophy />
-        <MarqueeText />
-        <EyesFollow />
-      </Suspense>
+      {/* Only render heavy lazy-loaded sections after initial preloader completes */}
+      {!loading && (
+        <Suspense fallback={<div className="min-h-[50vh] w-full bg-black flex items-center justify-center text-white/50">Loading sections...</div>}>
+          <BrandStory />
+          <ArtisanCraftsmanship />
+          <HorizontalLookbook />
+          <ColorMorphSection color="#2a0013">
+            <FabricShowcase />
+          </ColorMorphSection>
+          <ProcessTimeline />
+          <VideoScaleTransition />
+          <TextMarqueeSeparator />
+          <StackedFabricCards />
+          <FullscreenCollection />
+          <ArtisansAccordion />
+          <HandloomHistoryTimeline />
+          <InteractiveFabric3D />
+          <TextMaskPhilosophy />
+          <MarqueeText />
+          <EyesFollow />
+        </Suspense>
+      )}
       {/* <Newsletter /> */}
 
       {/* Premium Dark Footer */}

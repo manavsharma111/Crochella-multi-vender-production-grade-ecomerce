@@ -77,6 +77,12 @@ const VideoScaleTransition = () => {
         },
         0,
       )
+
+      // Force play for mobile
+      const video = centerVideoRef.current?.querySelector('video')
+      if (video) {
+        video.play().catch(e => console.log("Autoplay prevented:", e));
+      }
     }, containerRef)
 
     return () => ctx.revert()

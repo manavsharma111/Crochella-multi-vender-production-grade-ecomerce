@@ -26,6 +26,11 @@ const CinematicHero = ({ loading }) => {
         { scale: 1, opacity: 0.6, duration: 2, ease: "power2.out" },
       )
 
+      // Force play for mobile devices where autoPlay might be blocked
+      if (videoRef.current) {
+        videoRef.current.play().catch(e => console.log("Autoplay prevented:", e));
+      }
+
       // Prepare text timeline but keep it paused initially
       const words = gsap.utils.toArray(".hero-word")
       gsap.set(words, { yPercent: 120, rotateZ: 5 })

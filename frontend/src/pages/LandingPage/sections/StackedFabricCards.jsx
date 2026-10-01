@@ -89,6 +89,7 @@ const StackedFabricCards = () => {
               filter: `blur(${(index - i) * 4}px)`,
               opacity: 1 - (index - i) * 0.1,
               ease: "none",
+              force3D: true, // Force GPU acceleration for smooth blur
             },
             `stack-${index}`,
           )
@@ -109,11 +110,12 @@ const StackedFabricCards = () => {
           <div
             key={card.id}
             ref={(el) => (cardsRef.current[index] = el)}
-            className="absolute top-0 left-0 w-full h-full rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 shadow-2xl origin-top"
+            className="absolute top-0 left-0 w-full h-full rounded-3xl p-8 md:p-16 flex flex-col md:flex-row gap-8 shadow-2xl origin-top transform-gpu"
             style={{
               backgroundColor: card.bgColor,
               color: card.textColor,
               zIndex: index,
+              willChange: "transform, filter", // Pre-calculate filter for smooth scroll
             }}
           >
             {/* Text Content */}
